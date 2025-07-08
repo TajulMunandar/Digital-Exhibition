@@ -36,7 +36,7 @@
 
                 <div class="col-lg-4">
                     <div class="rounded-container shadow-sm p-3 mb-4">
-                        <h5 class="mb-3">Technologies Used</h5>
+                        <h5 class="mb-3">Teknologi Yang Digunakan</h5>
                         <ul class="tech-icons ps-0">
                             @foreach ($project->Teches as $tech)
                                 <li><img src="{{ asset('storage/public/icons/' . $tech->icon) }}" alt=""
@@ -64,7 +64,7 @@
                                 target="_blank" rel="noopener">Infinite
                                 Learning Indonesia</a>
                         </div>
-                        <button class="btn btn-contact-admin d-block w-100 p-2" style="background: #7a4dff"
+                        <button class="btn btn-contact-admin text-white fw-bold d-block w-100 p-2" style="background: #7a4dff"
                             data-bs-toggle="modal" data-bs-target="#modalSetujui">Hubungi
                             Admin</button>
                     </div>
@@ -73,17 +73,16 @@
 
             <!-- Title and badges -->
             <h1 class="fw-bold">{{ $project->nama_product }}</h1>
-            <div class="mb-3 d-flex flex-wrap gap-2 badge-group">
-                <span class="badge rounded-pill bg-primary">by {{ $project->nama_group }}</span>
-                <span class="badge rounded-pill bg-purple text-white"
-                    style="background-color:#d990d1;">{{ $project->Kategori->nama }}</span>
-                <span class="badge rounded-pill bg-info text-dark">Batch {{ $project->Kategori->batch }}</span>
+            <div class="mt-4 mb-3 d-flex flex-wrap gap-3 badge-group">
+                <span class="badge badge-purple p-2">by {{ $project->nama_group }}</span>
+                <span class="badge badge-pink p-2">{{ $project->Kategori->nama }}</span>
+                <span class="badge badge-blue-outline p-2">Batch {{ $project->Kategori->batch }}</span>
             </div>
 
             <!-- Project description -->
             <section>
                 <h3 class="section-title">Deskripsi Project</h3>
-                <p>{{ $project->deskripsi }}</p>
+                <p>{!! $project->deskripsi !!}</p>
             </section>
 
             <!-- Mentor Group -->
@@ -122,7 +121,7 @@
                                         <svg viewBox="0 0 24 24">
                                             <path
                                                 d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-11 20h-3v-12h3v12zm-1.5-13.4c-1 0-1.8-.8-1.8-1.8s.8-1.8 1.8-1.8c1 0 1.8.8 1.8 1.8s-.8 1.8-1.8 1.8zm13.5 13.4h-3v-5.6c0-1.3-.5-2.2-1.7-2.2s-2 1-2 2.1v5.7h-3v-12h3v1.6h.1c.5-.9 1.7-1.8 3.5-1.8 3.7 0 4.3 2.5 4.3 5.7v6.5z" />
-                                        </svg>
+                                        </svg><img src="{{ asset('img/logo-linkind.png') }}" class="me-2" style="width: 1rem; height: 1rem;"> 
                                         LinkedIn
                                     </a>
                                 </div>
@@ -134,67 +133,70 @@
         </div>
 
         <div class="modal fade" id="modalSetujui" tabindex="-1" aria-labelledby="modalSetujuiLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content p-3" style="border-radius: 32px">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="diskusiModalLabel">Hubungi Admin untuk Diskusi Lebih Lanjut</h5>
+                        <h5 class="modal-title fw-bold" id="diskusiModalLabel">Hubungi Admin untuk Diskusi Lebih Lanjut</h5>
 
                     </div>
                     <form action="{{ route('pesan.store') }}" method="POST">
                         @csrf
                         <div class="modal-body">
-                            <p>Anda dapat mengisi bagian ini jika tertarik untuk mengetahui lebih lanjut atau ingin
-                                mendiskusikan
-                                produk
-                                ini
-                                lebih jauh.</p>
-                            <div class="form-group mb-2">
-                                <label for="type_pesan">Apa Topik Yang Ingin Anda Diskusikan?</label>
-                                <select class="form-control" name="type_pesan" id="type_pesan" required>
-                                    <option value="">Pilih opsi diskusi</option>
-                                    <option value="Saya tertarik untuk merekrut anggota tim">Saya tertarik untuk merekrut
-                                        anggota tim</option>
-                                    <option value="Saya ingin berinvestasi">Saya ingin berinvestasi</option>
-                                    <option value="Lainnya">Lainnya</option>
-                                </select>
+                            <p>Anda dapat mengisi bagian ini jika tertarik untuk mengetahui lebih lanjut atau ingin mendiskusikan produk ini lebih jauh.</p>
+                            
+                            <div class="fx-bold">
+                                <div class="form-group mb-3">
+                                    <label for="type_pesan">Apa Topik Yang Ingin Anda Diskusikan?</label>
+                                    <select class="form-select" name="type_pesan" id="type_pesan" required>
+                                        <option value="">Pilih opsi diskusi</option>
+                                        <option value="Saya tertarik untuk merekrut anggota tim">Saya tertarik untuk merekrut
+                                            anggota tim</option>
+                                        <option value="Saya ingin berinvestasi">Saya ingin berinvestasi</option>
+                                        <option value="Lainnya">Lainnya</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label for="nama_investor">Nama</label>
+                                    <input type="text" class="form-control" name="nama_investor" id="nama_investor" placeholder="Masukkan nama anda"
+                                        required>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label for="instansi">Nama Industri</label>
+                                    <input type="text" class="form-control" name="instansi" id="instansi" placeholder="Masukkan nama industri" required>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label for="email">Email/No.Telepon</label>
+                                    <input type="text" class="form-control" name="email" id="email" placeholder="Masukkan email/No. Telepon" required>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label for="alamat_instansi">Alamat Perusahaan</label>
+                                    <input type="text" class="form-control" name="alamat_instansi" id="alamat_instansi" placeholder="Masukkan alamat perusahaan"
+                                        required>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label for="pesan">Pesan</label>
+                                    <textarea class="form-control textarea-vertical-center" name="pesan" id="pesan" rows="3" placeholder="Tuliskan pesan" required></textarea>
+                                </div>
+
                             </div>
 
-                            <div class="form-group mb-2">
-                                <label for="nama_investor">Nama</label>
-                                <input type="text" class="form-control" name="nama_investor" id="nama_investor"
-                                    required>
-                            </div>
-
-                            <div class="form-group mb-2">
-                                <label for="instansi">Nama Industri</label>
-                                <input type="text" class="form-control" name="instansi" id="instansi" required>
-                            </div>
-
-                            <div class="form-group mb-2">
-                                <label for="email">Email/No.Telepon</label>
-                                <input type="text" class="form-control" name="email" id="email" required>
-                            </div>
-
-                            <div class="form-group mb-2">
-                                <label for="alamat_instansi">Alamat Perusahaan</label>
-                                <input type="text" class="form-control" name="alamat_instansi" id="alamat_instansi"
-                                    required>
-                            </div>
-
-                            <div class="form-group mb-2">
-                                <label for="pesan">Pesan</label>
-                                <textarea class="form-control" name="pesan" id="pesan" rows="3" required></textarea>
-                            </div>
-
-                            <div class="form-group mb-2 form-check">
+                            <h6 class="modal-title fw-bold">Apakah Kamu Yakin Ingin Mengirim Pesan Ini?</h6>
+                                <p>Pesan ini akan dikirimkan kepada admin. Anda akan dihubungi melalui informasi kontak yang telah Anda berikan. Pastikan semua informasi yang dimasukkan sudah benar dan akurat.</p>
+                            <div class="form-group mb-3 form-check">
+                                
                                 <input type="checkbox" class="form-check-input" id="confirm" required>
                                 <label class="form-check-label" for="confirm">Ya, data sudah benar</label>
                             </div>
 
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                            <button type="submit" class="btn btn-primary">Kirim</button>
+                            <button type="button" class="btn btn-custom-cancel rounded" data-bs-dismiss="modal">Batal</button>
+                            <button type="submit" class="btn btn-custom rounded">Kirim</button>
                         </div>
                     </form>
                 </div>
@@ -210,6 +212,17 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: #222;
         }
+
+        .fx-bold label {
+            font-weight: 600;
+        }
+
+        .textarea-vertical-center {
+            align-items: center; /* Vertikal tengah */
+            text-align: left;     /* Teks tetap rata kiri */
+            padding-top: 3.5rem;
+        }
+
 
         .navbar-custom {
             background-color: white;
@@ -242,6 +255,26 @@
             color: white;
         }
 
+        .btn-custom {
+            background-color: #8a3dff;
+            color: white;
+            padding: 0.7rem 2rem;
+            border-radius: 999px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-custom-cancel {
+            background-color: rgba(92, 92, 92, 0.2);
+            color: #5C5C5C;
+            padding: 0.7rem 2rem;
+            border-radius: 999px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
         .btn-light {
             background-color: lightpurple;
             color: #8a3dff;
@@ -253,8 +286,6 @@
             padding: 12px 20px;
             background: linear-gradient(135deg, #7a4dff, #a78bfa);
             color: #fff;
-            font-weight: 600;
-            font-size: 1rem;
             border: none;
             border-radius: 8px;
             box-shadow: 0 4px 14px rgba(122, 77, 255, 0.4);
@@ -265,11 +296,6 @@
             background: linear-gradient(135deg, #5a34e0, #8c6dff);
             box-shadow: 0 6px 18px rgba(90, 52, 224, 0.5);
             transform: translateY(-2px);
-        }
-
-        .btn-contact-admin:active {
-            transform: scale(0.98);
-            box-shadow: 0 2px 8px rgba(90, 52, 224, 0.3);
         }
 
         .rounded-container {
@@ -300,6 +326,31 @@
         .badge-group .badge {
             font-size: 0.8rem;
             font-weight: 600;
+        }
+
+        .badge-purple {
+            background-color: #8A3DFF;
+            color: #F4F3F9;
+            font-size: 0.7;
+            font-weight: 600;
+            text-transform: capitalize;
+        }
+
+        .badge-pink {
+            background-color: transparent;
+            color: #BE2CD2;
+            border: #BE2CD2 1px solid;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: capitalize;
+        }
+
+        .badge-blue-outline {
+            border: 1px solid #214CE0;
+            color: #214CE0;
+            background-color: transparent;
+            font-weight: 600;
+            font-size: 0.7rem;
         }
 
         .section-title {

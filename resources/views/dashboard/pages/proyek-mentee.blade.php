@@ -18,10 +18,11 @@
             </div>
         </div>
 
+        {{-- lama --}}
         <div class="card">
             <div class="card-body">
                 <h5 class="mb-4">Daftar Project</h5>
-                <table class="table table-striped w-100" id="myTable">
+                <table class="table table-striped w-100 " id="myTable">
                     <thead>
                         <tr>
                             <th>No</th>
@@ -43,7 +44,7 @@
                                 <td>{{ $project->sesi_kelas }}</td>
                                 <td>{{ $project->kategori->batch ?? '-' }}</td>
                                 <td>
-                                    <button class="btn btn-info btn-sm" data-bs-toggle="modal"
+                                    <button class="btn btn-primary" style="background: #8A3DFF" data-bs-toggle="modal"
                                         data-bs-target="#detailModal{{ $project->id }}">
                                         Detail
                                     </button>
@@ -85,7 +86,7 @@
 
                                 <div class="col-lg-4">
                                     <div class="rounded-container shadow-sm p-3 mb-4">
-                                        <h5 class="mb-3">Technologies Used</h5>
+                                        <h5 class="mb-3">Teknologi Yang Digunakan</h5>
                                         <ul class="tech-icons ps-0">
                                             @foreach ($project->Teches as $tech)
                                                 <li>
@@ -110,17 +111,16 @@
 
                             <!-- Title and badges -->
                             <h1 class="fw-bold">{{ $project->nama_product }}</h1>
-                            <div class="mb-3 d-flex flex-wrap gap-2 badge-group">
-                                <span class="badge rounded-pill bg-primary">by {{ $project->nama_group }}</span>
-                                <span class="badge rounded-pill bg-purple text-white">{{ $project->Kategori->nama }}</span>
-                                <span class="badge rounded-pill bg-info text-dark">Batch
-                                    {{ $project->Kategori->batch }}</span>
+                            <div class="mt-4 mb-3 d-flex flex-wrap gap-3 badge-group">
+                                <span class="badge badge-purple p-2">by {{ $project->nama_group }}</span>
+                                <span class="badge badge-pink p-2">{{ $project->Kategori->nama }}</span>
+                                <span class="badge badge-blue-outline p-2">Batch {{ $project->Kategori->batch }}</span>
                             </div>
 
                             <!-- Description -->
                             <section>
                                 <h3 class="section-title">Deskripsi Project</h3>
-                                <p>{{ $project->deskripsi }}</p>
+                                <p>{!! $project->deskripsi !!}</p>
                             </section>
 
                             <!-- Mentor Section -->
@@ -157,7 +157,7 @@
                                                         <svg viewBox="0 0 24 24">
                                                             <path
                                                                 d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-11 20h-3v-12h3v12zm-1.5-13.4c-1 0-1.8-.8-1.8-1.8s.8-1.8 1.8-1.8c1 0 1.8.8 1.8 1.8s-.8 1.8-1.8 1.8zm13.5 13.4h-3v-5.6c0-1.3-.5-2.2-1.7-2.2s-2 1-2 2.1v5.7h-3v-12h3v1.6h.1c.5-.9 1.7-1.8 3.5-1.8 3.7 0 4.3 2.5 4.3 5.7v6.5z" />
-                                                        </svg>
+                                                        </svg><img src="{{ asset('img/logo-linkind.png') }}" class="me-2" style="width: 1rem; height: 1rem;"> 
                                                         LinkedIn
                                                     </a>
                                                 </div>
@@ -264,6 +264,31 @@
         .badge-group .badge {
             font-size: 0.8rem;
             font-weight: 600;
+        }
+
+        .badge-purple {
+            background-color: #8A3DFF;
+            color: #F4F3F9;
+            font-size: 0.7;
+            font-weight: 600;
+            text-transform: capitalize;
+        }
+
+        .badge-pink {
+            background-color: transparent;
+            color: #BE2CD2;
+            border: #BE2CD2 1px solid;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: capitalize;
+        }
+
+        .badge-blue-outline {
+            border: 1px solid #214CE0;
+            color: #214CE0;
+            background-color: transparent;
+            font-weight: 600;
+            font-size: 0.7rem;
         }
 
         .section-title {

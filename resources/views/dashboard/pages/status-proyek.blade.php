@@ -52,10 +52,12 @@
                                 <td>{{ $project->Kategori->batch ?? '-' }}</td>
                                 <td>{{ $project->created_at->format('d M Y') }}</td>
                                 <td>
-                                    @if ($project->Status->last()->status == 'Disetujui')
-                                        <span class="badge" style="background: purple">Disetujui</span>
-                                    @else
-                                        <span class="badge" style="background: red">Revisi</span>
+                                    @if ($project->Status->last()->exists())
+                                        @if ($project->Status->last()->status == 'Disetujui')
+                                            <span class="badge" style="background: purple">Disetujui</span>
+                                        @else
+                                            <span class="badge" style="background: red">Revisi</span>
+                                        @endif
                                     @endif
                                 </td>
                             </tr>

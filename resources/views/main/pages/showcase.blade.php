@@ -2,35 +2,73 @@
 
 @section('content')
     <div class="container py-5">
-        <header class="mb-4 d-flex flex-column flex-md-row align-items-center justify-content-between gap-3">
-            <h1 class="header-title">Studi Independen</h1>
-            <div class="d-flex flex-column flex-md-row gap-3 w-100">
-                <form method="GET" class="d-flex flex-column flex-md-row gap-3 w-100 mb-4">
-                    <input type="search" name="search" value="{{ request('search') }}" class="form-control"
-                        placeholder="Cari nama proyek" />
+        <header class="mb-4 d-flex flex-column flex-md-row align-items-center gap-3">
+    {{-- Kolom kiri: Judul --}}
+    <h1 class="header-title mb-0 me-md-4">Studi Independen</h1>
 
-                    <select name="kategori" class="form-select" onchange="this.form.submit()">
-                        <option value="">Pilih Kategori Produk</option>
-                        @foreach ($kategoriList as $item)
-                            <option value="{{ $item }}" {{ request('kategori') == $item ? 'selected' : '' }}>
-                                {{ $item }}</option>
-                        @endforeach
-                    </select>
+    {{-- Kolom kanan: Form fleksibel --}}
+    <form method="GET" class="d-flex flex-grow-1 flex-column flex-md-row gap-3">
+        <input type="search" name="search" value="{{ request('search') }}" class="form-control"
+            placeholder="Cari nama proyek" />
 
-                    <select name="batch" class="form-select" onchange="this.form.submit()">
-                        <option value="">Pilih Batch Mentee</option>
-                        @foreach ($batchList as $item)
-                            <option value="{{ $item }}" {{ request('batch') == $item ? 'selected' : '' }}>Batch
-                                {{ $item }}</option>
-                        @endforeach
-                    </select>
+        <select name="kategori" class="form-select" onchange="this.form.submit()">
+            <option value="">Pilih Kategori Produk</option>
+            @foreach ($kategoriList as $item)
+                <option value="{{ $item }}" {{ request('kategori') == $item ? 'selected' : '' }}>
+                    {{ $item }}</option>
+            @endforeach
+        </select>
 
-                    <button class="btn btn-primary d-none" type="submit">Filter</button> {{-- Hidden, triggered by dropdown onchange --}}
-                </form>
-            </div>
-        </header>
+        <select name="batch" class="form-select" onchange="this.form.submit()">
+            <option value="">Pilih Batch Mentee</option>
+            @foreach ($batchList as $item)
+                <option value="{{ $item }}" {{ request('batch') == $item ? 'selected' : '' }}>Batch
+                    {{ $item }}</option>
+            @endforeach
+        </select>
+
+        <button class="btn btn-primary d-none" type="submit">Filter</button>
+    </form>
+</header>
 
         <div class="row g-4">
+            @foreach ($projects as $project)
+                <div class="col-12 col-md-6 col-lg-4">
+                    <a href="{{ route('project.show', $project->id) }}" class="text-decoration-none text-dark">
+                        <div class="card h-100 shadow-sm position-relative">
+                            @if ($project->is_best == 1)
+                                <img src="{{ asset('img/label-card.png') }}" 
+                                    alt="Best Project Label" 
+                                    class="position-absolute top-0 end-0" 
+                                    style="width: 146px; z-index: 10;">
+                            @endif
+                            <img src="{{ asset('storage/' . $project->thumbnail) }}"
+                                alt="Digital peternakan website UI showing dashboard and analytics with sheep images on brown background"
+                                class="card-img-top"
+                                onerror="this.onerror=null;this.src='https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/b16d330d-2919-418a-a0bf-0ae83fe4cdaa.png';" />
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">{{ $project->nama_product }}</h5>
+                                <div class="mb-2">
+                                    <span class="badge badge-purple">by {{ $project->nama_group }}</span>
+                                    <span class="badge badge-pink">{{ $project->Kategori->nama }}</span>
+                                    <span class="badge badge-blue-outline">Batch {{ $project->Kategori->batch }}</span>
+                                </div>
+                                {{-- <p class="card-text small line-clamp-3">
+                                    {{ $project->deskripsi }}
+                                </p> --}}
+                                <div class="line-clamp-3 small">
+                                        {!! strip_tags($project->deskripsi, '<b><strong><i><em>') !!}
+                                    </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            @endforeach
+        </div>
+        
+
+
+        {{-- <div class="row g-4">
             <!-- Card 1 -->
             @foreach ($projects as $project)
                 <div class="col-12 col-md-6 col-lg-4 position-relative">
@@ -50,7 +88,7 @@
                                     <span class="badge badge-blue">{{ $project->Kategori->nama }}</span>
                                     <span class="badge badge-purple-outline">Batch {{ $project->Kategori->batch }}</span>
                                 </div>
-                                <p class="card-text small">
+                                <p class="card-text small line-clamp-3">
                                     {{ $project->deskripsi }}
                                 </p>
                             </div>
@@ -59,7 +97,7 @@
                 </div>
             @endforeach
 
-        </div>
+        </div> --}}
 
 
         @if ($projects->hasPages())
@@ -155,22 +193,35 @@
             color: #8a3dff;
         }
 
-        .container {
+        /* .container {
             max-width: 1200px;
-        }
+        } */
 
         a {
             text-decoration: none;
         }
 
+        .btn-custom {
+            background-color: #8a3dff;
+            color: white;
+            padding: 0.7rem 1.5rem;
+            border-radius: 999px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-custom:hover {
+            background-color: #6c2edc;
+            color: white;
+        }
+
         .header-title {
             font-weight: 900;
             font-size: 1.35rem;
-            color: #0d0d13;
+            font-family: Arial, Helvetica, sans-serif;
+            color: #000000;
             letter-spacing: -0.5px;
-            background-image: linear-gradient(to right, #ff4e00, #ffec00);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
             display: inline-block;
             margin-bottom: 1rem;
         }
@@ -226,33 +277,29 @@
         }
 
         .badge-purple {
-            background-color: #9d4edd;
-            color: white;
+            background-color: #8A3DFF;
+            color: #F4F3F9;
             font-size: 0.675rem;
             font-weight: 600;
-            margin-right: 0.3rem;
             text-transform: capitalize;
         }
 
-        .badge-blue {
-            background-color: #4c6ef5;
-            color: white;
+        .badge-pink {
+            background-color: transparent;
+            color: #BE2CD2;
+            border: #BE2CD2 1px solid;
             font-size: 0.675rem;
             font-weight: 600;
-            margin-right: 0.3rem;
             text-transform: capitalize;
         }
 
-        .badge-purple-outline {
-            border: 1px solid #9d4edd;
-            color: #9d4edd;
+        .badge-blue-outline {
+            border: 1px solid #214CE0;
+            color: #214CE0;
             background-color: transparent;
             font-weight: 600;
-            margin-left: 0.5rem;
-            font-size: 0.75rem;
-            padding: 2px 8px;
-            border-radius: 20px;
-            line-height: 1.2;
+            font-size: 0.675rem;
+            text-transform: capitalize;
         }
 
         /* Ribbon styling */
@@ -295,6 +342,14 @@
         .form-control::placeholder {
             font-style: italic;
             color: #bbb;
+        }
+
+        .line-clamp-3 {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .footer {

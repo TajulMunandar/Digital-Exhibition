@@ -20,7 +20,7 @@
             <form action="{{ route('projects.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <!-- Informasi -->
-                <h5 class="mb-3 fw-bold">Informasi</h5>
+                <h5 class="mb-3 fw-bold">Informasi Proyek</h5>
                 <p class="mb-3">Bagian ini berisi informasi seputar detail grup, mulai dari nama group, sesi kelas,
                     hingga
                     mentor group dari <strong>Project Massive Challenge</strong>.</p>
@@ -74,8 +74,8 @@
                     <!-- Tim Web -->
                     @foreach ($memberGroups as $groupName => $members)
                         <fieldset class="mb-4">
-                            <legend class="fw-semibold">Tim {{ $groupName }}</legend>
-                            <small class="text-muted d-block mb-3">Form untuk anggota group {{ $groupName }}</small>
+                            <h6 class="fw-bold">Tim {{ $groupName }}</h6>
+                            <small class="text-muted d-block mb-1">Form untuk anggota group {{ $groupName }}</small>
 
                             <div class="repeater" data-group="{{ $groupName }}">
                                 <div class="row align-items-center gy-3 repeater-item mb-2">
@@ -121,7 +121,7 @@
                     </p>
 
                     <div class="mb-3">
-                        <label for="productName" class="form-label fw-semibold">Product Name</label>
+                        <h6 for="productName">Product Name</h6>
                         <small class="text-muted d-block mb-1">Gunakan format <strong>Title Case</strong> ya, contohnya
                             seperti
                             ini: Ayo Bercocok Tanam.</small>
@@ -130,18 +130,20 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="descriptionProduct" class="form-label fw-semibold">Description Product</label>
+                        <h6 for="descriptionProduct">Description Product</h6>
                         <small class="text-muted d-block mb-1">Kolom ini mendukung Rich Text Formatting. Usahakan
                             deskripsinya yang
                             padat dan berisi, ceritakan dampaknya kepada pengguna dan kamu bisa meng-highlight hal-hal yang
                             kamu
                             ingin tekankan kepada pembaca.</small>
-                        <textarea id="descriptionProduct" rows="4" class="form-control" placeholder="Describe product your team"
-                            name="deskripsi"></textarea>
+                        {{-- <textarea id="descriptionProduct" rows="4" class="form-control" placeholder="Describe product your team"
+                            name="deskripsi"></textarea> --}}
+                            {{-- kurni --}}
+                        <textarea id="descriptionProduct" class="form-control" placeholder="Deskripsikan produk tim kammu" name="deskripsi"></textarea>
                     </div>
 
                     <div class="mb-3">
-                        <label for="techSelect" class="form-label fw-semibold">Tech Stack</label>
+                        <h6 for="techSelect">Teknologi Yang Digunakan</h6>
                         <small class="text-muted d-block mb-1">Pilih lebih dari satu teknologi yang digunakan dalam produk
                             ini.</small>
                         <select name="tech_ids[]" id="techSelect" class="form-select" multiple>
@@ -152,8 +154,9 @@
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label fw-semibold">Thumbnail Product</label>
-                        <small class="text-muted d-block mb-1">Wajib menggunakan format gambar ya dan ukuran file &lt; 5 MB
+                        <h6>Thumbnail Product</h6>
+                        <small class="text-muted d-block mb-1">
+                            Thumbnail Product wajib menggunakan gambar berformat <b>*.JPEG</b> dan ukuran file &lt; 5 MB
                             dan
                             untuk ukurannya yaitu ukuran untuk desktop 16:9 atau 1280 × 720.</small>
                         <label for="thumbnailProduct" class="file-drop-zone" tabindex="0">
@@ -164,15 +167,15 @@
                                 <line x1="12" y1="12" x2="12" y2="21"></line>
                                 <path d="M20.39 18.39a5 5 0 00-9.79-1.6A4.5 4.5 0 015.5 17.5a4.5 4.5 0 00-.5 8.5h11"></path>
                             </svg>
-                            <span>Drag and drop your files here, or</span><br />
-                            <button type="button" class="btn btn-dark btn-sm mt-2">Browse Files</button>
+                            <span>upload file thumbnail</span><br />
+                            <button type="button" class="btn btn-dark btn-sm mt-2">Pilih File</button>
                             <input type="file" id="thumbnailProduct" class="d-none" accept="image/*"
                                 aria-label="Upload Thumbnail Product" name="thumbnail" />
                         </label>
                     </div>
 
                     <div class="mb-3">
-                        <label for="videoShowcase" class="form-label fw-semibold">Link Video Showcase</label>
+                        <h6 for="videoShowcase">Link Video Showcase</h6>
                         <small class="text-muted d-block mb-1">Silahkan upload terlebih dahulu videonya ke platform
                             <strong>Youtube</strong> dengan <strong>visibilitas Not Public</strong> atau <strong>Tidak
                                 Publik</strong>.</small>
@@ -181,14 +184,14 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="linkFigma" class="form-label fw-semibold">Link Figma</label>
+                        <h6 for="linkFigma">Link Figma</h6>
                         <small class="text-muted d-block mb-1">Masukkan Link figma Project .</small>
                         <input type="url" id="linkFigma" class="form-control" placeholder="Input your product name"
                             name="link_figma" />
                     </div>
 
                     <div class="mb-3">
-                        <label for="linkGithub" class="form-label fw-semibold">Link Website/Github</label>
+                        <h6 for="linkGithub">Link Website/Github</h6>
                         <small class="text-muted d-block mb-1">Jika website kamu belum menggunakan hosting yang berbayar
                             atau
                             mempunyai nama domain resmi, kamu bisa menggunakan platform seperti <strong>Vercel</strong> atau
@@ -201,8 +204,8 @@
 
                 <!-- Terms and Conditions -->
                 <fieldset class="border rounded p-3 mb-4">
-                    <legend class="fw-semibold mb-2 text-danger">Terms and Conditions<span class="text-danger">*</span>
-                    </legend>
+                    <h5 class="fw-bold mb-2 text-danger">Terms and Conditions<span class="text-danger">*</span>
+                    </h5>
                     <p class="small mb-3">
                         Produk yang teman-teman kembangkan sepenuhnya hak milik teman-teman dan tim. Infinite Learning
                         Indonesia
@@ -221,14 +224,16 @@
 
                 <!-- Buttons -->
                 <div class="d-flex justify-content-end gap-2">
-                    <button type="button" class="btn btn-secondary btn-disabled" disabled>Simpan Draft</button>
-                    <button type="submit" class="btn btn-primary">Kirim</button>
+                    <button type="submit" class="btn btn-primary" style="background: #8A3DFF">Kirim</button>
                 </div>
             </form>
         </div>
     </div>
 @endsection
 @section('script')
+        {{-- kurni --}}
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
     <script>
         // Script to handle file input click on custom drop zone
         const dropZone = document.querySelector('.file-drop-zone');
@@ -282,6 +287,18 @@
                         alert('Minimal satu anggota harus ada.');
                     }
                 });
+            });
+        });
+
+        // kurni
+        $(document).ready(function() {
+            $('#descriptionProduct').summernote({
+            height: 400,
+            toolbar: [
+                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['para', ['ul', 'ol',]],
+                ['insert', ['link']]
+            ]
             });
         });
     </script>

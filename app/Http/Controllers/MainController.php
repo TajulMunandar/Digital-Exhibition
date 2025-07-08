@@ -53,6 +53,7 @@ class MainController extends Controller
         $kategori = $request->input('kategori');
         $batch = $request->input('batch');
 
+        
 
         $projects = Project::with('Kategori')
             ->when($search, function ($query, $search) {
@@ -69,7 +70,7 @@ class MainController extends Controller
                 });
             })
             ->latest()
-            ->paginate(2) // <--- paginate di sini
+            ->paginate(9) // <--- paginate di sini
             ->withQueryString(); // <--- penting supaya filter tetap saat ganti halaman
         return view('main.pages.showcase',  compact('projects', 'kategoriList', 'batchList', 'search', 'kategori', 'batch'));
     }

@@ -1,5 +1,6 @@
 @extends('dashboard.partials.main')
 @section('content')
+    @if ($project)
     <!-- Top large image with phones + tablets + laptop + logo -->
     <div class="card-outer mb-4">
         <div class="d-flex flex-wrap justify-content-center align-items-center gap-4 p-3">
@@ -19,7 +20,7 @@
 
             <div class="col-lg-4">
                 <div class="rounded-container shadow-sm p-3 mb-4">
-                    <h5 class="mb-3">Technologies Used</h5>
+                    <h5 class="mb-3">Teknologi Yang Digunakan</h5>
                     <ul class="tech-icons ps-0">
                         @foreach ($project->Teches as $tech)
                             <li><img src="{{ asset('storage/public/icons/' . $tech->icon) }}" alt="" class="me-2"
@@ -42,18 +43,18 @@
         </div>
 
         <!-- Title and badges -->
-        <h1 class="fw-bold">{{ $project->nama_product }}</h1>
-        <div class="mb-3 d-flex flex-wrap gap-2 badge-group">
-            <span class="badge rounded-pill bg-primary">by {{ $project->nama_group }}</span>
-            <span class="badge rounded-pill bg-purple text-white"
-                style="background-color:#d990d1;">{{ $project->Kategori->nama }}</span>
-            <span class="badge rounded-pill bg-info text-dark">Batch {{ $project->Kategori->batch }}</span>
-        </div>
+            <h1 class="fw-bold">{{ $project->nama_product }}</h1>
+            <div class="mt-4 mb-3 d-flex flex-wrap gap-3 badge-group">
+                <span class="badge badge-purple p-2">by {{ $project->nama_group }}</span>
+                <span class="badge badge-pink p-2">{{ $project->Kategori->nama }}</span>
+                <span class="badge badge-blue-outline p-2">Batch {{ $project->Kategori->batch }}</span>
+            </div>
 
         <!-- Project description -->
         <section>
             <h3 class="section-title">Deskripsi Project</h3>
-            <p>{{ $project->deskripsi }}</p>
+            {{-- kurni --}}
+            {!! $project->deskripsi !!}
         </section>
 
         <!-- Mentor Group -->
@@ -91,7 +92,7 @@
                                     <svg viewBox="0 0 24 24">
                                         <path
                                             d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-11 20h-3v-12h3v12zm-1.5-13.4c-1 0-1.8-.8-1.8-1.8s.8-1.8 1.8-1.8c1 0 1.8.8 1.8 1.8s-.8 1.8-1.8 1.8zm13.5 13.4h-3v-5.6c0-1.3-.5-2.2-1.7-2.2s-2 1-2 2.1v5.7h-3v-12h3v1.6h.1c.5-.9 1.7-1.8 3.5-1.8 3.7 0 4.3 2.5 4.3 5.7v6.5z" />
-                                    </svg>
+                                    </svg><img src="{{ asset('img/logo-linkind.png') }}" class="me-2" style="width: 1rem; height: 1rem;"> 
                                     LinkedIn
                                 </a>
                             </div>
@@ -100,8 +101,17 @@
                 </div>
             </section>
         @endforeach
-
     </div>
+
+    @else
+        <!-- Jika data $project kosong / null -->
+        <div class="container mt-5">
+            <div class="alert text-center" style="background-color: rgba(128, 128, 128, 0.1);" role="alert">
+                Data Masih Kosong, Silahkan input data terlebih dahulu
+            </div>
+        </div>
+    @endif
+
 @endsection
 
 @section('css')
@@ -140,6 +150,31 @@
         .badge-group .badge {
             font-size: 0.8rem;
             font-weight: 600;
+        }
+
+        .badge-purple {
+            background-color: #8A3DFF;
+            color: #F4F3F9;
+            font-size: 0.7;
+            font-weight: 600;
+            text-transform: capitalize;
+        }
+
+        .badge-pink {
+            background-color: transparent;
+            color: #BE2CD2;
+            border: #BE2CD2 1px solid;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: capitalize;
+        }
+
+        .badge-blue-outline {
+            border: 1px solid #214CE0;
+            color: #214CE0;
+            background-color: transparent;
+            font-weight: 600;
+            font-size: 0.7rem;
         }
 
         .section-title {

@@ -25,26 +25,22 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Tipe Pesan</th>
-                            <th>Email</th>
                             <th>Nama Investor</th>
-                            <th>Instansi</th>
-                            <th>Alamat Instansi</th>
                             <th>Isi Pesan</th>
+                            <th>Tipe Pesan</th>
                             <th>Dikirim Pada</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($pesans as $index => $pesan)
                             <tr>
                                 <td>{{ $index + 1 }}</td>
-                                <td>{{ $pesan->type_pesan }}</td>
-                                <td>{{ $pesan->email }}</td>
                                 <td>{{ $pesan->nama_investor }}</td>
-                                <td>{{ $pesan->instansi }}</td>
-                                <td>{{ $pesan->alamat_instansi }}</td>
                                 <td>{{ $pesan->pesan }}</td>
+                                <td>{{ $pesan->type_pesan }}</td>
                                 <td>{{ $pesan->created_at->format('d M Y H:i') }}</td>
+                                <td>{{ $index + 1 }}</td>
                             </tr>
                         @endforeach
                     </tbody>

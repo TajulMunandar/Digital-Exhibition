@@ -3,7 +3,7 @@
 @section('content')
     <div class="row p-2">
         <div class="col">
-            <button class="btn btn-primary float-end mb-3" data-bs-toggle="modal" data-bs-target="#tambahMenteeModal">
+            <button class="btn btn-primary float-end mb-3" data-bs-toggle="modal" data-bs-target="#tambahMenteeModal" style="background: #8A3DFF">
                 <i class="fas fa-plus me-2"></i>Tambah
             </button>
         </div>
@@ -33,6 +33,7 @@
                             <th>Email</th>
                             <th>Username</th>
                             <th>Kategori</th>
+                            <th>Batch</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -43,15 +44,21 @@
                                 <td>{{ $mentee->user->email }}</td>
                                 <td>{{ $mentee->username }}</td>
                                 <td>{{ $mentee->kategori->nama }}</td>
+                                <td>{{ $mentee->kategori->batch }}</td>
                                 <td>
-                                    <button class="btn btn-warning" data-bs-toggle="modal"
+                                    {{-- 
+                                    style="background: #8A3DFF" -> Ungu button kek login
+                                    style="background: #4CAF50" -> edit
+                                    style="background: #336D95" -> edit pass
+                                    style="background: #E0594C" -> delete --}}
+                                    <button class="btn btn-warning" data-bs-toggle="modal" style="background: #4CAF50"
                                         data-bs-target="#editMenteeModal{{ $mentee->id }}">Edit</button>
-                                    <button class="btn btn-secondary" data-bs-toggle="modal"
+                                    <button class="btn btn-secondary" data-bs-toggle="modal" style="background: #336D95"
                                         data-bs-target="#resetPasswordModal{{ $mentee->id }}">Reset Password</button>
                                     <form action="{{ route('mentee.destroy', $mentee->id) }}" method="POST"
                                         class="d-inline">
                                         @csrf @method('DELETE')
-                                        <button class="btn btn-danger"
+                                        <button class="btn btn-danger" style="background: #E0594C"
                                             onclick="return confirm('Yakin hapus mentee ini?')">Delete</button>
                                     </form>
                                 </td>
@@ -145,13 +152,14 @@
                             <label>Kategori</label>
                             <select name="kategoriId" class="form-control" required>
                                 @foreach ($kategoris as $kategori)
-                                    <option value="{{ $kategori->id }}">{{ $kategori->nama }}</option>
+                                    <option value="{{ $kategori->id }}">{{ $kategori->nama }} (Batch
+                                        {{ $kategori->batch }})</option>
                                 @endforeach
                             </select>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-primary">Tambah</button>
+                        <button class="btn btn-primary" style="background: #8A3DFF">Buat Akun Mentee</button>
                     </div>
                 </form>
             </div>

@@ -4,7 +4,7 @@
     <!-- Tambah Button -->
     <div class="row p-2">
         <div class="col">
-            <button class="btn btn-primary float-end mb-3" data-bs-toggle="modal" data-bs-target="#tambahtechModal">
+            <button class="btn btn-primary float-end mb-3" data-bs-toggle="modal" data-bs-target="#tambahtechModal" style="background: #8A3DFF">
                 <i class="fas fa-plus me-2"></i>Tambah
             </button>
 
@@ -41,7 +41,7 @@
                                 <td>{{ $index + 1 }}</td>
                                 <td>{{ $tech->nama }}</td>
                                 <td> <img src="{{ asset('storage/public/icons/' . $tech->icon) }}" alt=""
-                                        width="50%"></td>
+                                        width="10%"></td>
                                 <td>
                                     <button class="btn btn-warning" data-bs-toggle="modal"
                                         data-bs-target="#edittechModal{{ $tech->id }}">Edit</button>

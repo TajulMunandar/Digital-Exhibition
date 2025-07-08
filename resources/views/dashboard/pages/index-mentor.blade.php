@@ -58,6 +58,10 @@
                                     <a class="btn btn-info btn-sm" href="{{ route('detail-project', $project->id) }}">
                                         Tinjau
                                     </a>
+                                    {{-- <button class="btn btn-info btn-sm" data-bs-toggle="modal"
+                                        data-bs-target="#detailModal{{ $project->id }}">
+                                        Tinjau
+                                    </button> --}}
                                 </td>
                             </tr>
                         @endforeach

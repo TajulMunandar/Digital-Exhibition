@@ -3,8 +3,8 @@
 @section('content')
     <div class="row p-2">
         <div class="col">
-            <button class="btn btn-primary float-end mb-3" data-bs-toggle="modal" data-bs-target="#tambahAsesmenModal">
-                <i class="fas fa-plus me-2"></i>Tambah Asesmen
+            <button class="btn btn-primary float-end mb-3" data-bs-toggle="modal" data-bs-target="#tambahAsesmenModal" style="background: #8A3DFF">
+                <i class="fas fa-plus me-2"></i>Tambah Kategori Mentor
             </button>
         </div>
 
@@ -33,7 +33,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active" href="/dashboard/mentor/asesment"
-                                style="background-color: #0d6efd; color: white; box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);">Asesment
+                                style="background-color: #0d6efd; color: white; box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);">Kategori
                                 Mentor</a>
                         </li>
                     </ul>
@@ -58,12 +58,15 @@
                                 <td>{{ $item->kategori->nama }}</td>
                                 <td>{{ $item->kategori->batch }}</td>
                                 <td>
-                                    <button class="btn btn-warning" data-bs-toggle="modal"
+                                    {{-- style="background: #4CAF50"
+                                    style="background: #336D95"
+                                    style="background: #E0594C" --}}
+                                    <button class="btn btn-warning" data-bs-toggle="modal" style="background: #4CAF50"
                                         data-bs-target="#editAsesmenModal{{ $item->id }}">Edit</button>
                                     <form action="{{ route('asesment.destroy', $item->id) }}" method="POST"
                                         class="d-inline">
                                         @csrf @method('DELETE')
-                                        <button class="btn btn-danger"
+                                        <button class="btn btn-danger" style="background: #E0594C"
                                             onclick="return confirm('Yakin ingin menghapus asesmen ini?')">Hapus</button>
                                     </form>
                                 </td>
@@ -82,7 +85,7 @@
                         @csrf
                         @method('PUT')
                         <div class="modal-header">
-                            <h5 class="modal-title">Edit Asesmen</h5>
+                            <h5 class="modal-title">Edit Kategori Mentor</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
                         <div class="modal-body">
@@ -111,7 +114,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Batal</button>
-                            <button class="btn btn-warning">Update</button>
+                            <button class="btn btn-warning" style="background: #8A3DFF">Update</button>
                         </div>
                     </form>
                 </div>
@@ -124,7 +127,7 @@
                 <form action="{{ route('asesment.store') }}" method="POST" class="modal-content">
                     @csrf
                     <div class="modal-header">
-                        <h5 class="modal-title">Tambah Asesmen</h5>
+                        <h5 class="modal-title">Tambah Kategori Mentor</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
@@ -151,7 +154,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-primary">Tambah</button>
+                        <button class="btn btn-primary" style="background: #8A3DFF">Tambah</button>
                     </div>
                 </form>
             </div>

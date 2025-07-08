@@ -4,10 +4,10 @@
     <div class="hero d-flex align-items-center">
         <div class="row">
             <div class="col">
-                <h1>Digital Exhibition: Showcase Proyek Mentee Infinite Learning</h1>
+                <h1 class="text-dark">Digital Exhibition: Showcase Proyek Mentee Infinite Learning</h1>
                 <p>Sebuah platform yang dirancang untuk menampilkan proyek-proyek yang dibuat oleh peserta program pelatihan
                     pengembangan aplikasi dan website.</p>
-                <a href="/showcase" class="btn btn-custom">Lihat Proyek Kami</a>
+                <a href="/showcase" class="btn btn-custom rounded">Lihat Proyek Kami <img src="{{ asset('img/arrow-right.svg') }}" alt="panah kanan" class="ms-2" style="width: 1rem; height: 1rem;"></a>
             </div>
             <div class="col">
                 <img src="{{ asset('img/div.png') }}" alt="Image of the exhibition" class="image-side img-fluid">
@@ -54,19 +54,34 @@
             <div class="col">
                 <h1>Proyek Showcase</h1>
             </div>
-            <div class="col d-flex justify-content-end">
-                <a href="/showcase" class="btn btn-custom">Lihat Proyek</a>
+            <div class="col text-end">
+                <a href="/showcase" class="btn btn-custom rounded">Lihat Proyek <img src="{{ asset('img/arrow-right.svg') }}" alt="panah kanan" class="ms-2" style="width: 1rem; height: 1rem;"></a>
             </div>
         </div>
         <div class="row mt-4">
             @foreach ($projects as $project)
                 <div class="col-md-4">
                     <a href="{{ route('project.show', $project->id) }}" class="text-decoration-none text-black">
-                        <div class="project-card" style="border: none;">
-                            <img src="{{ asset('storage/' . $project->thumbnail) }}" class="card-img-top" alt="Kosmiku">
-                            <div class="card-body ">
-                                <h5 class="card-title">{{ $project->nama_product }}</h5>
-                                <p class="card-text">{{ $project->deskripsi }}</p>
+                        <div class="project-card shadow-sm p-4" style="border: none;">
+                            <img src="{{ asset('storage/' . $project->thumbnail) }}" class="card-img-top mb-2" alt="Kosmiku">
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold mb-2">{{ $project->nama_product }}</h5>
+                                <p class="card-text small line-clamp-3">
+                                    {{-- baru 1 --}}
+                                    {{-- <p class="line-clamp-3">
+                                        {{ Str::limit(strip_tags($project->deskripsi), 150, '...') }}
+                                    </p> --}}
+
+                                    {{-- baru 2 --}}
+                                    <div class="line-clamp-3 prose prose-sm">
+                                        {!! strip_tags($project->deskripsi, '<b><strong><i><em>') !!}
+                                    </div>
+
+                                    {{-- baru 3 --}}
+                                    {{-- <p class="line-clamp-3 text-sm text-gray-700">
+                                        {{ Str::limit(strip_tags($project->deskripsi), 120, '...') }}
+                                    </p> --}}
+                                </p>
                             </div>
                         </div>
                     </a>
@@ -79,17 +94,17 @@
         <div class="container mb-5">
             <div class="logo-container">
                 <h2 class="mb-5 pb-5">Mitra Terbaik Kami</h2>
-                <img src="https://www.pngkey.com/png/detail/201-2015918_red-hat-linux-logo-png-svg-red-hat.png"
+                <img class="mx-5" src="https://www.pngkey.com/png/detail/201-2015918_red-hat-linux-logo-png-svg-red-hat.png"
                     alt="Red Hat Logo PNG" height="60">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg" alt="IBM" height="60">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/RMIT_University_Logo.svg" alt="Red Hat"
+                <img class="mx-5" src="https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg" alt="IBM" height="60">
+                <img class="mx-5" src="https://upload.wikimedia.org/wikipedia/commons/5/51/RMIT_University_Logo.svg" alt="Red Hat"
                     height="60" style="background-color: white; padding: 4px; border-radius: 4px;">
 
-                <img src="https://kompaspedia.kompas.id/wp-content/uploads/2022/04/Logo-BI-format-PNG-1400x443.png"
+                <img class="mx-5" src="https://kompaspedia.kompas.id/wp-content/uploads/2022/04/Logo-BI-format-PNG-1400x443.png"
                     alt="Bank Indonesia" height="60" style="background-color:white; padding:4px; border-radius:4px;">
 
                 <!-- KOMINFO -->
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Logo_of_Ministry_of_Communication_and_Information_Technology_of_the_Republic_of_Indonesia.svg/2060px-Logo_of_Ministry_of_Communication_and_Information_Technology_of_the_Republic_of_Indonesia.svg.png"
+                <img class="mx-5" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Logo_of_Ministry_of_Communication_and_Information_Technology_of_the_Republic_of_Indonesia.svg/2060px-Logo_of_Ministry_of_Communication_and_Information_Technology_of_the_Republic_of_Indonesia.svg.png"
                     alt="KOMINFO" height="60" style="background-color:white; padding:4px; border-radius:4px;">
             </div>
         </div>
@@ -220,6 +235,14 @@
             color: white;
         }
 
+        .line-clamp-3 {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
         .image-side {
             max-width: 100%;
             height: 100%;
@@ -252,10 +275,12 @@
             border-radius: 8px;
             overflow: hidden;
             transition: transform 0.2s;
+            cursor: pointer;
         }
 
         .project-card:hover {
-            transform: scale(1.05);
+            transform: translateY(-6px);
+            box-shadow: 0 14px 32px rgb(0 0 0 / 0.2);
         }
 
         .logo-container {

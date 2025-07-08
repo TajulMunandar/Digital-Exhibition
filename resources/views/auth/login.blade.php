@@ -14,6 +14,9 @@
             justify-content: center;
             background-color: #f8f9fa;
             /* Light background */
+
+            /* supaya buttonnya bisa msuk ksih posisi relative d sini */
+            position: relative; 
         }
 
         .login-container {
@@ -88,10 +91,30 @@
             font-size: 16px;
             color: #eee;
         }
+
+        .btn-custom {
+            background-color: #8a3dff;
+            color: white;
+            padding: 0.7rem 1.5rem;
+            border-radius: 999px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-custom:hover {
+            background-color: #6c2edc;
+            color: white;
+        }
     </style>
 </head>
 
 <body>
+    <!-- Tombol kembali -->
+    <a href="/" class="position-absolute top-0 start-0 m-5">
+        Kembali Ke Beranda
+    </a>
+    
     <div class="login-container">
         <div class="login-image">
             <div class="image-overlay"></div> <!-- Layer gelap -->
@@ -132,7 +155,8 @@
                         required name="password">
                     <small class="form-text text-muted">*Silahkan hubungi admin jika lupa kata sandi.</small>
                 </div>
-                <button type="submit" class="btn btn-primary d-block w-100">Masuk</button>
+                <button type="submit" class="btn btn-custom rounded d-block w-100">Masuk</button>
+                {{-- <button type="submit" class="btn btn-primary d-block w-100">Masuk</button> --}}
             </form>
         </div>
     </div>

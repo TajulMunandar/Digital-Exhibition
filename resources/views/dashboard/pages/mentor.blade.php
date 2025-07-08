@@ -3,7 +3,7 @@
 @section('content')
     <div class="row p-2">
         <div class="col">
-            <button class="btn btn-primary float-end mb-3" data-bs-toggle="modal" data-bs-target="#tambahMentorModal">
+            <button class="btn btn-primary float-end mb-3" style="background: #8A3DFF" data-bs-toggle="modal" data-bs-target="#tambahMentorModal">
                 <i class="fas fa-plus me-2"></i>Tambah
             </button>
         </div>
@@ -32,7 +32,7 @@
                             <a class="nav-link active" aria-current="page" href="/dashboard/mentor">Akun Mentor</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/dashboard/mentor/asesment">Asesment Mentor</a>
+                            <a class="nav-link" href="/dashboard/mentor/asesment">Kategori Mentor</a>
                         </li>
                     </ul>
                 </div>
@@ -52,14 +52,14 @@
                                 <td>{{ $mentor->user->email }}</td>
                                 <td>{{ $mentor->username }}</td>
                                 <td>
-                                    <button class="btn btn-warning" data-bs-toggle="modal"
+                                    <button class="btn btn-primary" style="background: #4CAF50" data-bs-toggle="modal"
                                         data-bs-target="#editMentorModal{{ $mentor->id }}">Edit</button>
-                                    <button class="btn btn-secondary" data-bs-toggle="modal"
+                                    <button class="btn btn-secondary" data-bs-toggle="modal" style="background: #336D95"
                                         data-bs-target="#resetPasswordModal{{ $mentor->id }}">Reset Password</button>
                                     <form action="{{ route('mentor.destroy', $mentor->id) }}" method="POST"
                                         class="d-inline">
                                         @csrf @method('DELETE')
-                                        <button class="btn btn-danger"
+                                        <button class="btn btn-danger" style="background: #E0594C"
                                             onclick="return confirm('Yakin hapus mentor ini?')">Delete</button>
                                     </form>
                                 </td>
@@ -142,7 +142,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-primary">Tambah</button>
+                        <button class="btn btn-primary" style="background: #8A3DFF">Buat akun mentor</button>
                     </div>
                 </form>
             </div>
