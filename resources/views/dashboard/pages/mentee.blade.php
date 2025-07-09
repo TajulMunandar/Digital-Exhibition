@@ -50,16 +50,20 @@
                                     style="background: #8A3DFF" -> Ungu button kek login
                                     style="background: #4CAF50" -> edit
                                     style="background: #336D95" -> edit pass
-                                    style="background: #E0594C" -> delete --}}
-                                    <button class="btn btn-warning" data-bs-toggle="modal" style="background: #4CAF50"
-                                        data-bs-target="#editMenteeModal{{ $mentee->id }}">Edit</button>
-                                    <button class="btn btn-secondary" data-bs-toggle="modal" style="background: #336D95"
-                                        data-bs-target="#resetPasswordModal{{ $mentee->id }}">Reset Password</button>
+                                    style="background: rgba(92, 92, 92, 0.2); color:rgb(92, 92, 92)" -> Button Batal
+                                    <img src="{{ asset('img/icons/edit-icon.svg') }}" alt="Edit" width="32" height="32"> -> Icon Edit Pencil
+                                    style="background: #E0594C" -> delete
+                                    class"p-2" style="background: rgba(224, 89, 76, 0.1)"><img src="{{ asset('img/icons/delete.svg') }}" alt="Edit" width="32" height="32"> -> ICON DELETE
+                                     --}}
+                                    <button class="btn btn-warning p-2 me-2" data-bs-toggle="modal" style="background: rgba(76, 175, 80, 0.2)"
+                                        data-bs-target="#editMenteeModal{{ $mentee->id }}"><img src="{{ asset('img/icons/edit-icon.svg') }}" alt="Edit" width="32" height="32"></button>
+                                    <button class="btn btn-secondary p-2 me-2" data-bs-toggle="modal" style="background: rgba(51, 109, 149, 0.2)"
+                                        data-bs-target="#resetPasswordModal{{ $mentee->id }}"><img src="{{ asset('img/icons/edit-pass-icon.svg') }}" alt="Edit" width="32" height="32"></button>
                                     <form action="{{ route('mentee.destroy', $mentee->id) }}" method="POST"
                                         class="d-inline">
                                         @csrf @method('DELETE')
-                                        <button class="btn btn-danger" style="background: #E0594C"
-                                            onclick="return confirm('Yakin hapus mentee ini?')">Delete</button>
+                                        <button class="btn btn-danger p-2" style="background: rgba(224, 89, 76, 0.1)"
+                                            onclick="return confirm('Yakin hapus mentee ini?')"><img src="{{ asset('img/icons/delete.svg') }}" alt="Edit" width="32" height="32"></button>
                                     </form>
                                 </td>
                             </tr>
@@ -97,8 +101,8 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Simpan</button>
+                            <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal" style="background: rgba(92, 92, 92, 0.2); color:rgb(92, 92, 92)">Batal</button>
+                            <button type="submit" class="btn btn-primary" style="background: #8A3DFF">Simpan</button>
                         </div>
                     </form>
                 </div>
@@ -109,17 +113,17 @@
                         @csrf
                         @method('PUT')
                         <div class="modal-header">
-                            <h5 class="modal-title">Reset Password</h5>
+                            <h5 class="modal-title">Ganti Sandi</h5>
                         </div>
                         <div class="modal-body">
                             <div class="mb-3">
-                                <label>Password Baru</label>
+                                <label>Sandi Baru</label>
                                 <input type="password" name="password" class="form-control" required minlength="6">
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Batal</button>
-                            <button type="submit" class="btn btn-danger">Reset</button>
+                            <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal" style="background: rgba(92, 92, 92, 0.2); color:rgb(92, 92, 92)">Batal</button>
+                            <button type="submit" class="btn btn-danger" style="background: #8A3DFF">Ganti</button>
                         </div>
                     </form>
                 </div>

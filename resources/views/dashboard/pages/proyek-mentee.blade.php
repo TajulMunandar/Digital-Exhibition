@@ -168,11 +168,10 @@
                             @endforeach
                             <div class="row w-100">
                                 <div class="col d-flex justify-content-end">
-                                    <button class="btn btn-secondary me-2" close="close" data-bs-dismiss="modal">
+                                    <button class="btn btn-secondary me-2" close="close" data-bs-dismiss="modal" style="background: rgba(92, 92, 92, 0.2); color:rgb(92, 92, 92)">
                                         Batal
                                     </button>
-                                    <!-- Tombol Setujui -->
-                                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalSetujui">
+                                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalSetujui" style="background: #8A3DFF">
                                         Jadikan Best Project
                                     </button>
                                 </div>
@@ -197,8 +196,9 @@
                         <p>Yakin ingin menjadikan project ini best project?</p>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                        <button class="btn btn-primary" type="submit">Jadikan Best Project</button>
+                        <button class="btn btn-secondary me-2" close="close" data-bs-dismiss="modal" style="background: rgba(92, 92, 92, 0.2); color:rgb(92, 92, 92)">Batal</button>
+                        {{-- <button class="btn btn-secondary" data-bs-dismiss="modal">Batal</button> --}}
+                        <button class="btn btn-primary" type="submit" style="background: #8A3DFF">Jadikan Best Project</button>
                     </div>
                 </div>
             </form>
