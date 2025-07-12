@@ -4,7 +4,7 @@
     <!-- Tombol Tambah -->
     <div class="row p-2">
         <div class="col">
-            <button class="btn btn-primary float-end mb-3" data-bs-toggle="modal" data-bs-target="#tambahMemberModal">
+            <button class="btn btn-primary float-end mb-3" data-bs-toggle="modal" data-bs-target="#tambahMemberModal" style="background: #8A3DFF">
                 <i class="fas fa-plus me-2"></i>Tambah Member
             </button>
         </div>
@@ -47,13 +47,10 @@
                                 <td>{{ $member->group }}</td>
                                 <td>{{ $member->kategori->nama }} (Batch {{ $member->kategori->batch }})</td>
                                 <td>
-                                    <button class="btn btn-warning" data-bs-toggle="modal"
-                                        data-bs-target="#editMemberModal{{ $member->id }}">Edit</button>
-                                    <form action="{{ route('member-master.destroy', $member->id) }}" method="POST"
-                                        class="d-inline">
+                                    <button class="btn btn-warning  p-2 me-2" data-bs-toggle="modal" style="background: rgba(76, 175, 80, 0.2)" data-bs-target="#editMemberModal{{ $member->id }}"><img src="{{ asset('img/icons/edit-icon.svg') }}" alt="Edit" width="32" height="32"></button>
+                                    <form action="{{ route('member-master.destroy', $member->id) }}" method="POST" class="d-inline">
                                         @csrf @method('DELETE')
-                                        <button class="btn btn-danger"
-                                            onclick="return confirm('Yakin hapus member ini?')">Delete</button>
+                                        <button class="btn btn-danger p-2" onclick="return confirm('Yakin hapus member ini?')" style="background: rgba(224, 89, 76, 0.1)"><img src="{{ asset('img/icons/delete.svg') }}" alt="Delete" width="32" height="32"></button>
                                     </form>
                                 </td>
                             </tr>
@@ -97,8 +94,8 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Simpan</button>
+                            <button type="button" class="btn" data-bs-dismiss="modal" style="background: rgba(92, 92, 92, 0.2); color:rgb(92, 92, 92)">Batal</button>
+                            <button type="submit" class="btn btn-primary" style="background: #8A3DFF">Simpan</button>
                         </div>
                     </form>
                 </div>
@@ -134,7 +131,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-primary">Tambah</button>
+                        <button class="btn btn-primary" style="background: #8A3DFF">Tambah</button>
                     </div>
                 </form>
             </div>

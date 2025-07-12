@@ -37,7 +37,7 @@
                             <tr>
                                 <td>{{ $index + 1 }}</td>
                                 <td>{{ $pesan->nama_investor }}</td>
-                                <td>{{ $pesan->pesan }}</td>
+                                <td>{{ \Illuminate\Support\Str::words($pesan->pesan, 7, ' ...') }}</td>
                                 <td>{{ $pesan->type_pesan }}</td>
                                 <td>{{ $pesan->created_at->format('d M Y H:i') }}</td>
                                 {{-- <td>{{ $index + 1 }}</td> --}}
@@ -55,7 +55,7 @@
         </div>
     </div>
     @foreach ($pesans as $pesan)
-        <div class="modal fade" id="detailModal{{ $pesan->id }}" tabindex="+1"
+        <div class="modal fade" id="detailModal{{ $pesan->id }}" tabindex="1"
             aria-labelledby="detailModalLabel{{ $pesan->id }}" aria-hidden="true">
             <div class="modal-dialog modal-xl modal-dialog-scrollable">
                 <div class="modal-content">

@@ -55,9 +55,10 @@
                                 <td>{{ $project->Kategori->batch ?? '-' }}</td>
                                 <td>{{ $project->created_at->format('d M Y') }}</td>
                                 <td>
-                                    <a class="btn btn-info btn-sm" href="{{ route('detail-project', $project->id) }}">
+                                    <a class="btn btn-primary" href="{{ route('detail-project', $project->id) }}" style="background: #8A3DFF">
                                         Tinjau
                                     </a>
+                                    {{-- <button class="btn btn-primary" style="background: #8A3DFF" data-bs-toggle="modal" data-bs-target="#detailModal{{ $project->id }}">Detail</button> --}}
                                     {{-- <button class="btn btn-info btn-sm" data-bs-toggle="modal"
                                         data-bs-target="#detailModal{{ $project->id }}">
                                         Tinjau

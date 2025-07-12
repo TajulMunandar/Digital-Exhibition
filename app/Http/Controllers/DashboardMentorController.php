@@ -22,6 +22,13 @@ class DashboardMentorController extends Controller
         return view('dashboard.pages.approvment', compact('project', 'pages'));
     }
 
+    // public function show($projectId)
+    // {
+    //     $project = Project::find($projectId);
+    //     $pages = "Detail Project";
+    //     return view('dashboard.pages.approvment', compact('project', 'pages'));
+    // }
+
     public function setujui(Project $project)
     {
 

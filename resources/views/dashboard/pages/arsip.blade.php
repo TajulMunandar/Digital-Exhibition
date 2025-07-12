@@ -50,10 +50,7 @@
                                 <td>Batch {{ $project->Kategori->batch ?? '-' }}</td>
                                 <td>{{ $project->created_at->format('d M Y') }}</td>
                                 <td>
-                                    <button class="btn btn-info btn-sm" data-bs-toggle="modal"
-                                        data-bs-target="#detailModal{{ $project->id }}">
-                                        Tinjau
-                                    </button>
+                                    <button class="btn btn-primary" style="background: #8A3DFF" data-bs-toggle="modal" data-bs-target="#detailModal{{ $project->id }}">Detail</button>
                                 </td>
                             </tr>
                         @endforeach
