@@ -6,6 +6,7 @@ use App\Models\Mentee;
 use App\Models\Mentor;
 use App\Models\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
@@ -19,8 +20,17 @@ class DashboardController extends Controller
         $akun = $mente + $mentor;
         $best = Project::where('is_best', 1)->count();
         $project = Project::count();
+        $projectsPerBatch = DB::table('projects')
+            ->join('kategori_projects', 'projects.kategoriId', '=', 'kategori_projects.id')
+            ->select('kategori_projects.batch', DB::raw('COUNT(projects.id) as total_project'))
+            ->groupBy('kategori_projects.batch')
+            ->orderBy('kategori_projects.batch')
+            ->get();
+
+        $batchLabels = $projectsPerBatch->pluck('batch');
+        $batchCounts = $projectsPerBatch->pluck('total_project');
         $pages = "Dashboard";
-        return view('dashboard.pages.index')->with(compact('pages', 'best', 'project', 'akun'));
+        return view('dashboard.pages.index')->with(compact('pages', 'best', 'project', 'akun', 'akun', 'batchLabels', 'batchCounts'));
     }
 
     /**
