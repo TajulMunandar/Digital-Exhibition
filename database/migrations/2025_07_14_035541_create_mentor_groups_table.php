@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('mentors', function (Blueprint $table) {
+        Schema::create('mentor_groups', function (Blueprint $table) {
             $table->id();
-            $table->string('username')->unique();
+            $table->foreignId('projectId')->constrained('projects')->onDelete('restrict')->onUpdate('cascade');
+            $table->foreignId('mentorId')->constrained('mentor_projects')->onDelete('restrict')->onUpdate('cascade');
             $table->timestamps();
         });
     }
@@ -23,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('mentors');
+        Schema::dropIfExists('mentor_groups');
     }
 };

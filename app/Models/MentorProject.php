@@ -17,9 +17,19 @@ class MentorProject extends Model
     {
         return $this->belongsTo(Mentor::class, 'mentorId');
     }
-    
+
     public function Kategori()
     {
         return $this->belongsTo(KategoriProject::class, 'kategoriId');
+    }
+
+    public function User()
+    {
+        return $this->belongsTo(User::class, 'userId', 'id');
+    }
+
+    public function MentorGroup()
+    {
+        return $this->hasMany(MentorGroup::class, 'mentorId');
     }
 }

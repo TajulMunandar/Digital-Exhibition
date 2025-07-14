@@ -33,7 +33,7 @@
                         <input type="text" id="namaGroup" class="form-control" placeholder="Masukkan nama group"
                             name="nama_group" />
                     </div>
-                    <div class="col-lg-2">
+                    <div class="col-lg-3">
                         <label for="sesiKelas" class="form-label fw-semibold">Sesi Kelas</label>
                         <br class="small mb-2">
                         </br>
@@ -44,24 +44,16 @@
                             <option value="Malam">Malam</option>
                         </select>
                     </div>
-                    <div class="col-lg-2">
-                        <label>Kategori</label>
+                    <div class="col-lg-3">
+                        <label for="mentorGroupSelect" class="form-label fw-semibold">Mentor Group</label>
                         <br class="small mb-2">
                         </br>
-                        <select name="kategoriId" id="kategoriId" class="form-control" name="kategoriId">
-                            <option value="">-- Pilih Kategori --</option>
-                            @foreach ($kategoris as $kategori)
-                                <option value="{{ $kategori->id }}">{{ $kategori->nama }} - Batch {{ $kategori->batch }}
-                                </option>
+                        <select id="mentorGroupSelect" class="form-select" name="mentorId[]" multiple>
+                            <option disabled>Pilih Mentor</option>
+                            @foreach ($mentors as $mentor)
+                                <option value="{{ $mentor->id }}">{{ $mentor->Mentor->username }}</option>
                             @endforeach
                         </select>
-                    </div>
-                    <div class="col-lg-3">
-                        <label for="mentorGroup" class="form-label fw-semibold">Mentor Group</label>
-                        <br class="small mb-2">
-                        </br>
-                        <textarea id="mentorGroupText" type="text" id="mentorGroup" class="form-control"
-                            placeholder="Nama depan mentor Group" readonly></textarea>
                     </div>
                 </div>
 
@@ -138,7 +130,7 @@
                             ingin tekankan kepada pembaca.</small>
                         {{-- <textarea id="descriptionProduct" rows="4" class="form-control" placeholder="Describe product your team"
                             name="deskripsi"></textarea> --}}
-                            {{-- kurni --}}
+                        {{-- kurni --}}
                         <textarea id="descriptionProduct" class="form-control" placeholder="Deskripsikan produk tim kammu" name="deskripsi"></textarea>
                     </div>
 
@@ -231,9 +223,10 @@
     </div>
 @endsection
 @section('script')
-        {{-- kurni --}}
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+    {{-- kurni --}}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
     <script>
         // Script to handle file input click on custom drop zone
         const dropZone = document.querySelector('.file-drop-zone');
@@ -255,16 +248,7 @@
                 dropZone.querySelector('span').textContent = fileInput.files[0].name;
             }
         });
-        $('#kategoriId').on('change', function() {
-            const kategoriId = $(this).val();
-            if (kategoriId) {
-                $.get('/dashboard/get-mentors/' + kategoriId, function(data) {
-                    $('#mentorGroupText').val(data.join(', ')); // gabungkan jadi string
-                });
-            } else {
-                $('#mentorGroupText').val('');
-            }
-        });
+
         $(document).ready(function() {
             $('.repeater').each(function() {
                 let repeater = $(this);
@@ -293,12 +277,21 @@
         // kurni
         $(document).ready(function() {
             $('#descriptionProduct').summernote({
-            height: 400,
-            toolbar: [
-                ['style', ['bold', 'italic', 'underline', 'clear']],
-                ['para', ['ul', 'ol',]],
-                ['insert', ['link']]
-            ]
+                height: 400,
+                toolbar: [
+                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                    ['para', ['ul', 'ol', ]],
+                    ['insert', ['link']]
+                ]
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const mentorGroupSelect = document.getElementById('mentorGroupSelect');
+            new Choices(mentorGroupSelect, {
+                removeItemButton: false,
+                shouldSort: false,
+                placeholder: false,
             });
         });
     </script>

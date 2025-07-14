@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('mentorId')->constrained('mentors')->onDelete('restrict')->onUpdate('cascade');
             $table->foreignId('kategoriId')->constrained('kategori_projects')->onDelete('restrict')->onUpdate('cascade');
+            $table->foreignId('userId')->constrained('users')->onDelete('restrict')->onUpdate('cascade');
             $table->timestamps();
         });
     }

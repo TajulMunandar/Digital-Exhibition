@@ -4,19 +4,17 @@
          <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
              aria-hidden="true" id="iconSidenav"></i>
          <a class="navbar-brand m-0 d-flex flex-column"
-            href="
-                @if (auth()->user()->isAdmin == 1)
-                    {{ url('/dashboard/index') }}
-                @elseif (auth()->user()->Mentor != null)
+             href="
+                @if (auth()->user()->isAdmin == 1) {{ url('/dashboard/index') }}
+                @elseif (auth()->user()->MentorProject != null)
                     {{ url('/dashboard/index-mentor') }}
                 @else
-                    {{ url('/dashboard/index-mente') }}
-                @endif
+                    {{ url('/dashboard/index-mente') }} @endif
             ">
              <span class="ms-1 font-weight-bold">
                  @if (auth()->user()->isAdmin == 1)
                      Admin Infinite Learning
-                 @elseif (auth()->user()->Mentor != null)
+                 @elseif (auth()->user()->MentorProject != null)
                      Mentor Infinite Learning
                  @else
                      Mentee Dashboard
@@ -25,7 +23,7 @@
              <span class="ms-1 ">
                  @if (auth()->user()->isAdmin == 1)
                      Head Program
-                 @elseif (auth()->user()->Mentor != null)
+                 @elseif (auth()->user()->MentorProject != null)
                      Mentor Infinite Learning
                  @else
                      {{ auth()->user()->Mentee->Kategori->nama }}
@@ -115,7 +113,7 @@
                          <span class="nav-link-text ms-1">Kategori</span>
                      </a>
                  </li>
-             @elseif(auth()->user()->isAdmin == 0 && auth()->user()->Mentor != null)
+             @elseif(auth()->user()->isAdmin == 0 && auth()->user()->MentorProject != null)
                  <li class="nav-item">
                      <a class="nav-link {{ Request::is('dashboard/index-mentor') ? 'active' : '' }}"
                          href="/dashboard/index-mentor">

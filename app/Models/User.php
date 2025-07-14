@@ -44,11 +44,10 @@ class User extends Authenticatable
         ];
     }
 
-    public function Mentor()
+    public function MentorProject()
     {
-        return $this->hasOne(Mentor::class, 'userId');
+        return $this->hasOne(MentorProject::class, 'userId');
     }
-
     public function Mentee()
     {
         return $this->hasOne(Mentee::class, 'userId');

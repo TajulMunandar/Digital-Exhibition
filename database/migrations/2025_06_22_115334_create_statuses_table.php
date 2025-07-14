@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('statuses', function (Blueprint $table) {
             $table->id();
-            $table->string('status');
+            $table->string(column: 'status');
             $table->foreignId('projectId')->constrained('projects')->onDelete('restrict')->onUpdate('cascade');
             $table->text('comment');
             $table->timestamps();

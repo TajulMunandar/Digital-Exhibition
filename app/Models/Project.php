@@ -36,4 +36,9 @@ class Project extends Model
     {
         return $this->hasMany(Status::class, 'projectId');
     }
+
+    public function MentorGroup()
+    {
+        return $this->hasMany(MentorGroup::class, 'projectId');
+    }
 }

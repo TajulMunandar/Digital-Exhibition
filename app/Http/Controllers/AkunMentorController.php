@@ -15,7 +15,7 @@ class AkunMentorController extends Controller
      */
     public function index()
     {
-        $mentors = Mentor::with(['user'])->get();
+        $mentors = Mentor::get();
         $pages = "Akun Mentor";
         return view('dashboard.pages.mentor', compact('mentors', 'pages'));
     }
@@ -34,20 +34,11 @@ class AkunMentorController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'email' => 'required|email|unique:users,email',
             'username' => 'required|unique:mentors,username',
-            'password' => 'required|min:6',
         ]);
 
         try {
-            $user = User::create([
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-                'isAdmin' => 0,
-            ]);
-
             $mentor = Mentor::create([
-                'userId' => $user->id,
                 'username' => $request->username,
             ]);
 
@@ -101,39 +92,11 @@ class AkunMentorController extends Controller
     {
         try {
             $mentor = Mentor::findOrFail($id);
-            $user = User::find($mentor->userId);
 
             $mentor->delete();
-            if ($user) {
-                $user->delete();
-            }
-
             return redirect()->back()->with('success', 'Mentor berhasil dihapus!');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Gagal menghapus mentor: ' . $e->getMessage());
-        }
-    }
-
-    public function resetPassword(Request $request, $id)
-    {
-        $validator = Validator::make($request->all(), [
-            'password' => 'required|min:6',
-        ]);
-
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
-
-        try {
-            $mentor = Mentor::findOrFail($id);
-            $user = User::findOrFail($mentor->userId);
-            $user->update([
-                'password' => Hash::make($request->password),
-            ]);
-
-            return redirect()->back()->with('success', 'Password berhasil direset!');
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Gagal reset password: ' . $e->getMessage());
         }
     }
 }

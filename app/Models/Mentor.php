@@ -13,11 +13,6 @@ class Mentor extends Model
         'id',
     ];
 
-    public function User()
-    {
-        return $this->belongsTo(User::class, 'userId', 'id');
-    }
-
     public function MentorProject()
     {
         return $this->hasMany(MentorProject::class, 'mentorId');

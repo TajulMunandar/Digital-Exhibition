@@ -3,7 +3,8 @@
 @section('content')
     <div class="row p-2">
         <div class="col">
-            <button class="btn btn-primary float-end mb-3" data-bs-toggle="modal" data-bs-target="#tambahAsesmenModal" style="background: #8A3DFF">
+            <button class="btn btn-primary float-end mb-3" data-bs-toggle="modal" data-bs-target="#tambahAsesmenModal"
+                style="background: #8A3DFF">
                 <i class="fas fa-plus me-2"></i>Tambah Kategori Mentor
             </button>
         </div>
@@ -42,28 +43,32 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Username Mentor</th>
                             <th>Email</th>
+                            <th>Mentor</th>
                             <th>Kategori</th>
-                            <th>Batch</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($mentorProjects as $index => $item)
+                        @php $no = 1; @endphp
+                        @foreach ($groupedProjects as $index => $group)
                             <tr>
-                                <td>{{ $index + 1 }}</td>
-                                <td>{{ $item->mentor->username }}</td>
-                                <td>{{ $item->mentor->user->email }}</td>
-                                <td>{{ $item->kategori->nama }}</td>
-                                <td>{{ $item->kategori->batch }}</td>
+                                <td>{{ $no++ }}</td>
+                                <td>{{ $group['user']->email ?? '-' }}</td>
                                 <td>
-                                    {{-- style="background: #4CAF50"
-                                    style="background: #336D95"
-                                    style="background: #E0594C" --}}
+                                    @foreach ($group['mentors'] as $mentor)
+                                        {{ $mentor->username }},
+                                    @endforeach
+                                </td>
+                                <td>{{ $group['kategori']->nama ?? '-' }}</td>
+                                <td>
                                     <button class="btn btn-warning" data-bs-toggle="modal" style="background: #4CAF50"
-                                        data-bs-target="#editAsesmenModal{{ $item->id }}">Edit</button>
-                                    <form action="{{ route('asesment.destroy', $item->id) }}" method="POST"
+                                        data-bs-target="#editAsesmenModal{{ $group['id'] }}">Edit</button>
+
+                                    <button class="btn btn-secondary" data-bs-toggle="modal" style="background: #336D95"
+                                        data-bs-target="#resetPasswordModal{{ $group['id'] }}">Reset Password</button>
+
+                                    <form action="{{ route('asesment.destroy', $group['id']) }}" method="POST"
                                         class="d-inline">
                                         @csrf @method('DELETE')
                                         <button class="btn btn-danger" style="background: #E0594C"
@@ -91,11 +96,11 @@
                         <div class="modal-body">
                             <div class="mb-3">
                                 <label>Mentor</label>
-                                <select name="mentorId" class="form-control" required>
+                                <select name="mentorId[]" class="mentor-select" multiple required>
                                     @foreach ($mentors as $mentor)
                                         <option value="{{ $mentor->id }}"
-                                            {{ $item->mentorId == $mentor->id ? 'selected' : '' }}>
-                                            {{ $mentor->username }} ({{ $mentor->user->email }})
+                                            {{ in_array($mentor->id, $group['mentors']->pluck('id')->toArray()) ? 'selected' : '' }}>
+                                            {{ $mentor->username }} ({{ $mentor->email }})
                                         </option>
                                     @endforeach
                                 </select>
@@ -119,6 +124,29 @@
                     </form>
                 </div>
             </div>
+
+            {{-- Modal Reset Password --}}
+            <div class="modal fade" id="resetPasswordModal{{ $item->id }}" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-dialog-centered">
+                    <form action="{{ route('mentor.resetPassword', $item->id) }}" method="POST" class="modal-content">
+                        @csrf
+                        @method('PUT')
+                        <div class="modal-header">
+                            <h5 class="modal-title">Reset Password</h5>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label>Password Baru</label>
+                                <input type="password" name="password" class="form-control" required minlength="6">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Batal</button>
+                            <button type="submit" class="btn btn-danger">Reset</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         @endforeach
 
         {{-- Modal Tambah --}}
@@ -133,15 +161,15 @@
                     <div class="modal-body">
                         <div class="mb-3">
                             <label>Mentor</label>
-                            <select name="mentorId" class="form-control" required>
-                                <option disabled selected>-- Pilih Mentor --</option>
+                            <select name="mentorId[]" id="mentorSelect" multiple>
                                 @foreach ($mentors as $mentor)
-                                    <option value="{{ $mentor->id }}">{{ $mentor->username }}
-                                        ({{ $mentor->user->email }})
+                                    <option value="{{ $mentor->id }}">
+                                        {{ $mentor->username }} ({{ $mentor->email }})
                                     </option>
                                 @endforeach
                             </select>
                         </div>
+
                         <div class="mb-3">
                             <label>Kategori</label>
                             <select name="kategoriId" class="form-control" required>
@@ -151,6 +179,14 @@
                                         {{ $kategori->batch }})</option>
                                 @endforeach
                             </select>
+                        </div>
+                        <div class="mb-3">
+                            <label>Email</label>
+                            <input type="email" name="email" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label>Password</label>
+                            <input type="password" name="password" class="form-control" required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -163,6 +199,35 @@
 @endsection
 
 @section('script')
+    <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mentorSelect = document.getElementById('mentorSelect');
+            new Choices(mentorSelect, {
+                removeItemButton: true,
+                shouldSort: false,
+                placeholder: true,
+                placeholderValue: 'Pilih mentor...',
+            });
+        });
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('shown.bs.modal', function() {
+                modal.querySelectorAll('.mentor-select').forEach(function(selectElement) {
+                    if (!selectElement.classList.contains('choices-initialized')) {
+                        new Choices(selectElement, {
+                            removeItemButton: true,
+                            shouldSort: false,
+                            placeholder: true,
+                            placeholderValue: 'Pilih mentor...',
+                        });
+                        selectElement.classList.add(
+                            'choices-initialized'); // agar tidak double inisialisasi
+                    }
+                });
+            });
+        });
+    </script>
     <script>
         $(document).ready(function() {
             $('#myTable').DataTable({

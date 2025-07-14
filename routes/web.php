@@ -49,7 +49,7 @@ Route::prefix('dashboard')->group(function () {
     // Akun Mentor
     Route::resource('mentor/asesment', MentorProjectController::class);
     Route::resource('mentor', AkunMentorController::class);
-    Route::put('mentor/{id}/reset-password', [AkunMentorController::class, 'resetPassword'])->name('mentor.resetPassword');
+    Route::put('mentor/{id}/reset-password', [MentorProjectController::class, 'resetPassword'])->name('mentor.resetPassword');
 
     // Akun Mentee
     Route::resource('mentee', AkunMenteeController::class);

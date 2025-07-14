@@ -15,7 +15,7 @@ class TampilanProyekController extends Controller
     {
         $pages = "Tampilan Proyek";
         $user = FacadesAuth::user()->id;
-        $project = Project::where('userId', $user)->with('Member.MemberMaster')->first();
+        $project = Project::where('userId', $user)->with(['Member.MemberMaster', 'MentorGroup.MentorProject.Mentor'])->first();
         return view('dashboard.pages.tampilan-proyek')->with(compact('pages', 'project'));
     }
 

@@ -27,7 +27,7 @@ class AuthController extends Controller
             $user = Auth::user();
             if ($user->isAdmin == 1) {
                 return redirect('/dashboard/index');
-            } elseif ($user->Mentor) {
+            } elseif ($user->MentorProject) {
                 return redirect('/dashboard/index-mentor');
             } elseif ($user->Mentee) {
                 return redirect('/dashboard/index-mente');

@@ -80,3 +80,75 @@
         </div>
     </div>
 @endsection
+
+@section('script')
+    <script>
+        const batchLabels = @json($batchLabels);
+        const batchCounts = @json($batchCounts);
+        var ctx = document.getElementById("chart-bars").getContext("2d");
+
+        new Chart(ctx, {
+            type: "bar",
+            data: {
+                labels: batchLabels.map(label => "Batch " + label),
+                datasets: [{
+                    label: "Jumlah Project",
+                    tension: 0.4,
+                    borderWidth: 0,
+                    borderRadius: 4,
+                    borderSkipped: false,
+                    backgroundColor: "#845ef7",
+                    data: batchCounts,
+                    maxBarThickness: 12
+                }, ],
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false,
+                    }
+                },
+                interaction: {
+                    intersect: false,
+                    mode: 'index',
+                },
+                scales: {
+                    y: {
+                        grid: {
+                            drawBorder: false,
+                            display: false,
+                            drawOnChartArea: true,
+                            drawTicks: true,
+                        },
+                        ticks: {
+                            suggestedMin: 0,
+                            suggestedMax: 500,
+                            beginAtZero: true,
+                            padding: 15,
+                            font: {
+                                size: 14,
+                                family: "Inter",
+                                style: 'normal',
+                                lineHeight: 2
+                            },
+                            color: "#fff"
+                        },
+                    },
+                    x: {
+                        grid: {
+                            drawBorder: true,
+                            display: true,
+                            drawOnChartArea: true,
+                            drawTicks: true
+                        },
+                        ticks: {
+                            display: true
+                        },
+                    },
+                },
+            },
+        });
+    </script>
+@endsection

@@ -26,6 +26,8 @@ class DashboardMenteController extends Controller
 
         $user = Auth::user();
         $teches = Tech::all();
+        $mentors = MentorProject::with('Mentor')
+            ->get();
 
         // Ambil kategoriId mentee yang sedang login
         $kategoriId = $user->mentee->kategoriId ?? null;
@@ -37,7 +39,7 @@ class DashboardMenteController extends Controller
             ->groupBy('group');
 
         $kategoris = KategoriProject::all();
-        return view('dashboard.pages.input-project', compact('pages', 'kategoris', 'teches', 'memberGroups'));
+        return view('dashboard.pages.input-project', compact('pages', 'kategoris', 'teches', 'memberGroups', 'mentors'));
     }
 
     public function getMentorsByKategori($kategoriId)
@@ -63,12 +65,10 @@ class DashboardMenteController extends Controller
      */
     public function store(Request $request)
     {
-
         try {
             $request->validate([
                 'nama_group' => 'required|string|max:255',
                 'sesi_kelas' => 'required|string',
-                'kategoriId' => 'required|exists:kategori_projects,id',
                 'nama_product' => 'required|string|max:255',
                 'deskripsi' => 'required|string',
                 'link_video' => 'required|url',
@@ -93,7 +93,7 @@ class DashboardMenteController extends Controller
             $project = Project::create([
                 'nama_group' => $request->nama_group,
                 'sesi_kelas' => $request->sesi_kelas,
-                'kategoriId' => $request->kategoriId,
+                'kategoriId' => auth::user()->mentee->kategoriId,
                 'nama_product' => $request->nama_product,
                 'deskripsi' => $request->deskripsi,
                 'thumbnail' => $thumbnailPath,
@@ -102,6 +102,8 @@ class DashboardMenteController extends Controller
                 'link_figma' => $request->link_figma,
                 'link_website' => $request->link_website,
                 'userId' => Auth::user()->id,
+                'mentorId' => 'required|array',
+                'mentorId.*' => 'exists:mentor_projects,id', // <- penting!
                 'is_best' => false,
             ]);
 
@@ -133,6 +135,13 @@ class DashboardMenteController extends Controller
                         'projectId' => $project->id,
                     ]);
                 }
+            }
+
+            foreach ($request->mentorId as $mentorId) {
+                DB::table('mentor_groups')->insert([
+                    'projectId' => $project->id,
+                    'mentorId' => $mentorId,
+                ]);
             }
 
             DB::commit();

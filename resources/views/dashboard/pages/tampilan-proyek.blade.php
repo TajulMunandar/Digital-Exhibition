@@ -1,48 +1,48 @@
 @extends('dashboard.partials.main')
 @section('content')
     @if ($project)
-    <!-- Top large image with phones + tablets + laptop + logo -->
-    <div class="card-outer mb-4">
-        <div class="d-flex flex-wrap justify-content-center align-items-center gap-4 p-3">
-            <img src="{{ asset('storage/' . $project->thumbnail) }}" class="img-fluid img-card"
-                alt="Laptop screen depicting HidroTani online community forum page for hydroponic users" />
-        </div>
+        <!-- Top large image with phones + tablets + laptop + logo -->
+        <div class="card-outer mb-4">
+            <div class="d-flex flex-wrap justify-content-center align-items-center gap-4 p-3">
+                <img src="{{ asset('storage/' . $project->thumbnail) }}" class="img-fluid img-card"
+                    alt="Laptop screen depicting HidroTani online community forum page for hydroponic users" />
+            </div>
 
-        <!-- Video + Technologies + Links row -->
-        <div class="row gx-4 mb-4">
-            <div class="col-lg-8 mb-4">
-                <div class="video-wrapper shadow rounded-3">
-                    <iframe src="{{ $project->link_video }}" title="HidroTani Project Overview" frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
-                        allowfullscreen></iframe>
+            <!-- Video + Technologies + Links row -->
+            <div class="row gx-4 mb-4">
+                <div class="col-lg-8 mb-4">
+                    <div class="video-wrapper shadow rounded-3">
+                        <iframe src="{{ $project->link_video }}" title="HidroTani Project Overview" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+                            allowfullscreen></iframe>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="rounded-container shadow-sm p-3 mb-4">
+                        <h5 class="mb-3">Teknologi Yang Digunakan</h5>
+                        <ul class="tech-icons ps-0">
+                            @foreach ($project->Teches as $tech)
+                                <li><img src="{{ asset('storage/public/icons/' . $tech->icon) }}" alt=""
+                                        class="me-2" width="10%">
+                                    {{ $tech->nama }}
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    <div class="rounded-container shadow-sm p-3">
+                        <h5 class="mb-3">Project Links</h5>
+                        <ul class="ps-3">
+                            <li><a href="{{ $project->link_website }}" class="link-blue" target="_blank" rel="noopener">Link
+                                    Github</a></li>
+                            <li><a href="{{ $project->link_figma }}" class="link-blue" target="_blank" rel="noopener">Link
+                                    Prototype</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
 
-            <div class="col-lg-4">
-                <div class="rounded-container shadow-sm p-3 mb-4">
-                    <h5 class="mb-3">Teknologi Yang Digunakan</h5>
-                    <ul class="tech-icons ps-0">
-                        @foreach ($project->Teches as $tech)
-                            <li><img src="{{ asset('storage/public/icons/' . $tech->icon) }}" alt="" class="me-2"
-                                    width="10%">
-                                {{ $tech->nama }}
-                            </li>
-                        @endforeach
-                    </ul>
-                </div>
-                <div class="rounded-container shadow-sm p-3">
-                    <h5 class="mb-3">Project Links</h5>
-                    <ul class="ps-3">
-                        <li><a href="{{ $project->link_website }}" class="link-blue" target="_blank" rel="noopener">Link
-                                Github</a></li>
-                        <li><a href="{{ $project->link_figma }}" class="link-blue" target="_blank" rel="noopener">Link
-                                Prototype</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <!-- Title and badges -->
+            <!-- Title and badges -->
             <h1 class="fw-bold">{{ $project->nama_product }}</h1>
             <div class="mt-4 mb-3 d-flex flex-wrap gap-3 badge-group">
                 <span class="badge badge-purple p-2">by {{ $project->nama_group }}</span>
@@ -50,59 +50,66 @@
                 <span class="badge badge-blue-outline p-2">Batch {{ $project->Kategori->batch }}</span>
             </div>
 
-        <!-- Project description -->
-        <section>
-            <h3 class="section-title">Deskripsi Project</h3>
-            {{-- kurni --}}
-            {!! $project->deskripsi !!}
-        </section>
-
-        <!-- Mentor Group -->
-        <section>
-            <h3 class="section-title">Mentor Group</h3>
-            <div class="d-flex flex-wrap gap-4 fs-5">
-                @foreach ($project->Kategori->MentorProject as $mentorProject)
-                    <div class="d-flex align-items-center gap-2 flex-grow-1">
-                        <span class="person-icon">👤</span>{{ $mentorProject->Mentor->username }}
-                    </div>
-                @endforeach
-            </div>
-        </section>
-
-        @php
-            $groupedMembers = $project->Member->groupBy(fn($member) => $member->MemberMaster->group);
-
-        @endphp
-
-        <!-- Team Web -->
-        @foreach ($groupedMembers as $group => $members)
+            <!-- Project description -->
             <section>
-                <h3 class="section-title">Tim {{ $group }}</h3>
-                <div class="row g-4">
-                    @foreach ($members as $member)
-                        <div class="col-6 col-md-4 col-lg-3 team-member d-flex">
-                            <div class="icon-circle" aria-label="User Icon">
-                                {{ strtoupper(substr($member->nama, 0, 1)) }}
+                <h3 class="section-title">Deskripsi Project</h3>
+                {{-- kurni --}}
+                {!! $project->deskripsi !!}
+            </section>
+
+            <!-- Mentor Section -->
+            <section>
+                <h3 class="section-title">Mentor Group</h3>
+                <div class="d-flex flex-wrap gap-4 fs-5">
+                    @foreach ($project->MentorGroup as $mentorGroup)
+                        @php
+                            $mentorUsername = optional($mentorGroup->MentorProject->Mentor)->username;
+                        @endphp
+
+                        @if ($mentorUsername)
+                            <div class="d-flex align-items-center gap-2 flex-grow-1">
+                                <span class="person-icon">👤</span>{{ $mentorUsername }}
                             </div>
-                            <div>
-                                <div class="name">{{ $member->nama }}</div>
-                                <div class="role">{{ $member->MemberMaster->role }}</div>
-                                <a href="{{ $member->linkedIn }}" class="linkedin-link d-inline-flex align-items-center"
-                                    target="_blank" rel="noopener">
-                                    <svg viewBox="0 0 24 24">
-                                        <path
-                                            d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-11 20h-3v-12h3v12zm-1.5-13.4c-1 0-1.8-.8-1.8-1.8s.8-1.8 1.8-1.8c1 0 1.8.8 1.8 1.8s-.8 1.8-1.8 1.8zm13.5 13.4h-3v-5.6c0-1.3-.5-2.2-1.7-2.2s-2 1-2 2.1v5.7h-3v-12h3v1.6h.1c.5-.9 1.7-1.8 3.5-1.8 3.7 0 4.3 2.5 4.3 5.7v6.5z" />
-                                    </svg><img src="{{ asset('img/logo-linkind.png') }}" class="me-2" style="width: 1rem; height: 1rem;"> 
-                                    LinkedIn
-                                </a>
-                            </div>
-                        </div>
+                        @endif
                     @endforeach
                 </div>
             </section>
-        @endforeach
-    </div>
 
+            @php
+                $groupedMembers = $project->Member->groupBy(fn($member) => $member->MemberMaster->group);
+
+            @endphp
+
+            <!-- Team Web -->
+            @foreach ($groupedMembers as $group => $members)
+                <section>
+                    <h3 class="section-title">Tim {{ $group }}</h3>
+                    <div class="row g-4">
+                        @foreach ($members as $member)
+                            <div class="col-6 col-md-4 col-lg-3 team-member d-flex">
+                                <div class="icon-circle" aria-label="User Icon">
+                                    {{ strtoupper(substr($member->nama, 0, 1)) }}
+                                </div>
+                                <div>
+                                    <div class="name">{{ $member->nama }}</div>
+                                    <div class="role">{{ $member->MemberMaster->role }}</div>
+                                    <a href="{{ $member->linkedIn }}"
+                                        class="linkedin-link d-inline-flex align-items-center" target="_blank"
+                                        rel="noopener">
+                                        <svg viewBox="0 0 24 24">
+                                            <path
+                                                d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-11 20h-3v-12h3v12zm-1.5-13.4c-1 0-1.8-.8-1.8-1.8s.8-1.8 1.8-1.8c1 0 1.8.8 1.8 1.8s-.8 1.8-1.8 1.8zm13.5 13.4h-3v-5.6c0-1.3-.5-2.2-1.7-2.2s-2 1-2 2.1v5.7h-3v-12h3v1.6h.1c.5-.9 1.7-1.8 3.5-1.8 3.7 0 4.3 2.5 4.3 5.7v6.5z" />
+                                        </svg><img src="{{ asset('img/logo-linkind.png') }}" class="me-2"
+                                            style="width: 1rem; height: 1rem;">
+                                        LinkedIn
+                                    </a>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </section>
+            @endforeach
+        </div>
     @else
         <!-- Jika data $project kosong / null -->
         <div class="container mt-5">

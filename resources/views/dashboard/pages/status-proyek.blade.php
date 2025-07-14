@@ -41,23 +41,29 @@
 
                                 {{-- Mentor dari kategori->mentorProject --}}
                                 <td>
-                                    @php
-                                        $mentors = $project->Kategori->MentorProject ?? [];
-                                    @endphp
-                                    @foreach ($mentors as $mentor)
-                                        <span class="badge bg-primary me-1">{{ $mentor->Mentor->username }}</span>
+                                    @foreach ($project->MentorGroup as $group)
+                                        @php
+                                            $mentorUsername = optional($group->MentorProject->Mentor)->username;
+                                        @endphp
+
+                                        @if ($mentorUsername)
+                                            <span class="badge bg-primary me-1">{{ $mentorUsername }}</span>
+                                        @endif
                                     @endforeach
                                 </td>
                                 <td>{{ $project->sesi_kelas }}</td>
                                 <td>{{ $project->Kategori->batch ?? '-' }}</td>
                                 <td>{{ $project->created_at->format('d M Y') }}</td>
                                 <td>
-                                    @if ($project->Status->last()->exists())
-                                        @if ($project->Status->last()->status == 'Disetujui')
+                                    @php $latestStatus = $project->Status->last(); @endphp
+                                    @if ($latestStatus)
+                                        @if ($latestStatus->status == 'Disetujui')
                                             <span class="badge" style="background: purple">Disetujui</span>
                                         @else
                                             <span class="badge" style="background: red">Revisi</span>
                                         @endif
+                                    @else
+                                        <span class="badge bg-secondary">Diproses</span>
                                     @endif
                                 </td>
                             </tr>

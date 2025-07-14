@@ -3,7 +3,8 @@
 @section('content')
     <div class="row p-2">
         <div class="col">
-            <button class="btn btn-primary float-end mb-3" style="background: #8A3DFF" data-bs-toggle="modal" data-bs-target="#tambahMentorModal">
+            <button class="btn btn-primary float-end mb-3" style="background: #8A3DFF" data-bs-toggle="modal"
+                data-bs-target="#tambahMentorModal">
                 <i class="fas fa-plus me-2"></i>Tambah
             </button>
         </div>
@@ -40,7 +41,6 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Email</th>
                             <th>Username</th>
                             <th>Action</th>
                         </tr>
@@ -49,13 +49,11 @@
                         @foreach ($mentors as $index => $mentor)
                             <tr>
                                 <td>{{ $index + 1 }}</td>
-                                <td>{{ $mentor->user->email }}</td>
                                 <td>{{ $mentor->username }}</td>
                                 <td>
                                     <button class="btn btn-primary" style="background: #4CAF50" data-bs-toggle="modal"
                                         data-bs-target="#editMentorModal{{ $mentor->id }}">Edit</button>
-                                    <button class="btn btn-secondary" data-bs-toggle="modal" style="background: #336D95"
-                                        data-bs-target="#resetPasswordModal{{ $mentor->id }}">Reset Password</button>
+
                                     <form action="{{ route('mentor.destroy', $mentor->id) }}" method="POST"
                                         class="d-inline">
                                         @csrf @method('DELETE')
@@ -93,29 +91,6 @@
                     </form>
                 </div>
             </div>
-
-            {{-- Modal Reset Password --}}
-            <div class="modal fade" id="resetPasswordModal{{ $mentor->id }}" tabindex="-1" role="dialog">
-                <div class="modal-dialog modal-dialog-centered">
-                    <form action="{{ route('mentor.resetPassword', $mentor->id) }}" method="POST" class="modal-content">
-                        @csrf
-                        @method('PUT')
-                        <div class="modal-header">
-                            <h5 class="modal-title">Reset Password</h5>
-                        </div>
-                        <div class="modal-body">
-                            <div class="mb-3">
-                                <label>Password Baru</label>
-                                <input type="password" name="password" class="form-control" required minlength="6">
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Batal</button>
-                            <button type="submit" class="btn btn-danger">Reset</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
         @endforeach
 
         {{-- Modal Tambah --}}
@@ -128,14 +103,6 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
-                        <div class="mb-3">
-                            <label>Email</label>
-                            <input type="email" name="email" class="form-control" required>
-                        </div>
-                        <div class="mb-3">
-                            <label>Password</label>
-                            <input type="password" name="password" class="form-control" required>
-                        </div>
                         <div class="mb-3">
                             <label>Username</label>
                             <input type="text" name="username" class="form-control" required>
