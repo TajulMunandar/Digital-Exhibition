@@ -15,9 +15,9 @@
                                             aria-hidden="true"></i>
                                     </div>
                                     <h5 class="text-white font-weight-bolder mb-0 mt-3">
-                                        1600
+                                        {{ $akun }}
                                     </h5>
-                                    <span class="text-white text-sm">Users Active</span>
+                                    <span class="text-white text-sm">Total Akun Active</span>
                                 </div>
                             </div>
                         </div>
@@ -34,9 +34,9 @@
                                             aria-hidden="true"></i>
                                     </div>
                                     <h5 class="text-white font-weight-bolder mb-0 mt-3">
-                                        1600
+                                        {{ $project }}
                                     </h5>
-                                    <span class="text-white text-sm">Users Active</span>
+                                    <span class="text-white text-sm">Total Proyek</span>
                                 </div>
                             </div>
                         </div>
@@ -53,9 +53,9 @@
                                             aria-hidden="true"></i>
                                     </div>
                                     <h5 class="text-white font-weight-bolder mb-0 mt-3">
-                                        1600
+                                        {{ $best }}
                                     </h5>
-                                    <span class="text-white text-sm">Users Active</span>
+                                    <span class="text-white text-sm">Total Proyek Terbaik</span>
                                 </div>
                             </div>
                         </div>

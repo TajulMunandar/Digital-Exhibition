@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Mentee;
+use App\Models\Mentor;
+use App\Models\Project;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -11,8 +14,13 @@ class DashboardController extends Controller
      */
     public function index()
     {
+        $mente = Mentee::count();
+        $mentor = Mentor::count();
+        $akun = $mente + $mentor;
+        $best = Project::where('is_best', 1)->count();
+        $project = Project::count();
         $pages = "Dashboard";
-        return view('dashboard.pages.index')->with(compact('pages'));
+        return view('dashboard.pages.index')->with(compact('pages', 'best', 'project', 'akun'));
     }
 
     /**
