@@ -165,6 +165,16 @@
                          <span class="nav-link-text ms-1">Tampilan Proyek</span>
                      </a>
                  </li>
+                 <li class="nav-item">
+                     <a class="nav-link {{ Request::is('dashboard/status-proyek-mentee') ? 'active' : '' }}"
+                         href="/dashboard/status-proyek-mentee">
+                         <div class="icon icon-shape icon-sm shadow border-radius-md text-center me-2 d-flex align-items-center justify-content-center"
+                             style="background: {{ Request::is('dashboard/status-proyek-mentee') ? '#6f42c1' : '#b28be9' }}">
+                             <i class="fa-solid fa-circle-check fs-6"></i>
+                         </div>
+                         <span class="nav-link-text ms-1">Status Proyek</span>
+                     </a>
+                 </li>
              @endif
              <li class="nav-item">
                  <form action="{{ route('logout') }}" method="POST">

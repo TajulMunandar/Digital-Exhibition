@@ -14,6 +14,7 @@ use App\Http\Controllers\MentorProjectController;
 use App\Http\Controllers\PesanMasukController;
 use App\Http\Controllers\ProyekMenteeController;
 use App\Http\Controllers\StatusProyekController;
+use App\Http\Controllers\StatusProyekMenteeController;
 use App\Http\Controllers\TampilanProyekController;
 use App\Http\Controllers\TechController;
 use Illuminate\Support\Facades\Route;
@@ -59,6 +60,7 @@ Route::prefix('dashboard')->group(function () {
     Route::resource('member-master', MemberMasterController::class);
 
     // Status Proyek
+    Route::resource('status-proyek-mentee', StatusProyekMenteeController::class);
     Route::resource('status-proyek', StatusProyekController::class);
 
     // Arsip Proyek
