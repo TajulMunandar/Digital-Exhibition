@@ -11,7 +11,15 @@ class MainController extends Controller
 {
     public function index()
     {
-        $projects = Project::latest()->get()->take(3);
+        $projects = Project::whereHas('Status', function ($query) {
+            $query->where('status', 'Disetujui');
+        })
+            ->with(['Status' => function ($query) {
+                $query->latest();
+            }])
+            ->latest()
+            ->take(3)
+            ->get();
         return view('main.pages.index')->with('projects', $projects);
     }
 
@@ -53,8 +61,6 @@ class MainController extends Controller
         $kategori = $request->input('kategori');
         $batch = $request->input('batch');
 
-        
-
         $projects = Project::with('Kategori')
             ->when($search, function ($query, $search) {
                 $query->where('nama_product', 'like', '%' . $search . '%');
@@ -68,7 +74,12 @@ class MainController extends Controller
                 $query->whereHas('Kategori', function ($q) use ($batch) {
                     $q->where('batch', $batch);
                 });
+            })->whereHas('Status', function ($query) {
+                $query->where('status', 'Disetujui');
             })
+            ->with(['Status' => function ($query) {
+                $query->latest();
+            }])
             ->latest()
             ->paginate(9) // <--- paginate di sini
             ->withQueryString(); // <--- penting supaya filter tetap saat ganti halaman

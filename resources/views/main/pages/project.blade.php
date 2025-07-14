@@ -64,8 +64,8 @@
                                 target="_blank" rel="noopener">Infinite
                                 Learning Indonesia</a>
                         </div>
-                        <button class="btn btn-contact-admin text-white fw-bold d-block w-100 p-2" style="background: #7a4dff"
-                            data-bs-toggle="modal" data-bs-target="#modalSetujui">Hubungi
+                        <button class="btn btn-contact-admin text-white fw-bold d-block w-100 p-2"
+                            style="background: #7a4dff" data-bs-toggle="modal" data-bs-target="#modalSetujui">Hubungi
                             Admin</button>
                     </div>
                 </div>
@@ -89,10 +89,16 @@
             <section>
                 <h3 class="section-title">Mentor Group</h3>
                 <div class="d-flex flex-wrap gap-4 fs-5">
-                    @foreach ($project->Kategori->MentorProject as $mentorProject)
-                        <div class="d-flex align-items-center gap-2 flex-grow-1">
-                            <span class="person-icon">👤</span>{{ $mentorProject->Mentor->username }}
-                        </div>
+                    @foreach ($project->MentorGroup as $mentorGroup)
+                        @php
+                            $mentorUsername = optional($mentorGroup->MentorProject->Mentor)->username;
+                        @endphp
+
+                        @if ($mentorUsername)
+                            <div class="d-flex align-items-center gap-2 flex-grow-1">
+                                <span class="person-icon">👤</span>{{ $mentorUsername }}
+                            </div>
+                        @endif
                     @endforeach
                 </div>
             </section>
@@ -121,7 +127,8 @@
                                         <svg viewBox="0 0 24 24">
                                             <path
                                                 d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-11 20h-3v-12h3v12zm-1.5-13.4c-1 0-1.8-.8-1.8-1.8s.8-1.8 1.8-1.8c1 0 1.8.8 1.8 1.8s-.8 1.8-1.8 1.8zm13.5 13.4h-3v-5.6c0-1.3-.5-2.2-1.7-2.2s-2 1-2 2.1v5.7h-3v-12h3v1.6h.1c.5-.9 1.7-1.8 3.5-1.8 3.7 0 4.3 2.5 4.3 5.7v6.5z" />
-                                        </svg><img src="{{ asset('img/logo-linkind.png') }}" class="me-2" style="width: 1rem; height: 1rem;"> 
+                                        </svg><img src="{{ asset('img/logo-linkind.png') }}" class="me-2"
+                                            style="width: 1rem; height: 1rem;">
                                         LinkedIn
                                     </a>
                                 </div>
@@ -142,14 +149,16 @@
                     <form action="{{ route('pesan.store') }}" method="POST">
                         @csrf
                         <div class="modal-body">
-                            <p>Anda dapat mengisi bagian ini jika tertarik untuk mengetahui lebih lanjut atau ingin mendiskusikan produk ini lebih jauh.</p>
-                            
+                            <p>Anda dapat mengisi bagian ini jika tertarik untuk mengetahui lebih lanjut atau ingin
+                                mendiskusikan produk ini lebih jauh.</p>
+
                             <div class="fx-bold">
                                 <div class="form-group mb-3">
                                     <label for="type_pesan">Apa Topik Yang Ingin Anda Diskusikan?</label>
                                     <select class="form-select" name="type_pesan" id="type_pesan" required>
                                         <option value="">Pilih opsi diskusi</option>
-                                        <option value="Saya tertarik untuk merekrut anggota tim">Saya tertarik untuk merekrut
+                                        <option value="Saya tertarik untuk merekrut anggota tim">Saya tertarik untuk
+                                            merekrut
                                             anggota tim</option>
                                         <option value="Saya ingin berinvestasi">Saya ingin berinvestasi</option>
                                         <option value="Lainnya">Lainnya</option>
@@ -158,44 +167,49 @@
 
                                 <div class="form-group mb-3">
                                     <label for="nama_investor">Nama</label>
-                                    <input type="text" class="form-control" name="nama_investor" id="nama_investor" placeholder="Masukkan nama anda"
-                                        required>
+                                    <input type="text" class="form-control" name="nama_investor" id="nama_investor"
+                                        placeholder="Masukkan nama anda" required>
                                 </div>
 
                                 <div class="form-group mb-3">
                                     <label for="instansi">Nama Industri</label>
-                                    <input type="text" class="form-control" name="instansi" id="instansi" placeholder="Masukkan nama industri" required>
+                                    <input type="text" class="form-control" name="instansi" id="instansi"
+                                        placeholder="Masukkan nama industri" required>
                                 </div>
 
                                 <div class="form-group mb-3">
                                     <label for="email">Email/No.Telepon</label>
-                                    <input type="text" class="form-control" name="email" id="email" placeholder="Masukkan email/No. Telepon" required>
+                                    <input type="text" class="form-control" name="email" id="email"
+                                        placeholder="Masukkan email/No. Telepon" required>
                                 </div>
 
                                 <div class="form-group mb-3">
                                     <label for="alamat_instansi">Alamat Perusahaan</label>
-                                    <input type="text" class="form-control" name="alamat_instansi" id="alamat_instansi" placeholder="Masukkan alamat perusahaan"
-                                        required>
+                                    <input type="text" class="form-control" name="alamat_instansi"
+                                        id="alamat_instansi" placeholder="Masukkan alamat perusahaan" required>
                                 </div>
 
                                 <div class="form-group mb-3">
                                     <label for="pesan">Pesan</label>
-                                    <textarea class="form-control textarea-vertical-center" name="pesan" id="pesan" rows="3" placeholder="Tuliskan pesan" required></textarea>
+                                    <textarea class="form-control textarea-vertical-center" name="pesan" id="pesan" rows="3"
+                                        placeholder="Tuliskan pesan" required></textarea>
                                 </div>
 
                             </div>
 
                             <h6 class="modal-title fw-bold">Apakah Kamu Yakin Ingin Mengirim Pesan Ini?</h6>
-                                <p>Pesan ini akan dikirimkan kepada admin. Anda akan dihubungi melalui informasi kontak yang telah Anda berikan. Pastikan semua informasi yang dimasukkan sudah benar dan akurat.</p>
+                            <p>Pesan ini akan dikirimkan kepada admin. Anda akan dihubungi melalui informasi kontak yang
+                                telah Anda berikan. Pastikan semua informasi yang dimasukkan sudah benar dan akurat.</p>
                             <div class="form-group mb-3 form-check">
-                                
+
                                 <input type="checkbox" class="form-check-input" id="confirm" required>
                                 <label class="form-check-label" for="confirm">Ya, data sudah benar</label>
                             </div>
 
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-custom-cancel rounded" data-bs-dismiss="modal">Batal</button>
+                            <button type="button" class="btn btn-custom-cancel rounded"
+                                data-bs-dismiss="modal">Batal</button>
                             <button type="submit" class="btn btn-custom rounded">Kirim</button>
                         </div>
                     </form>
@@ -218,8 +232,10 @@
         }
 
         .textarea-vertical-center {
-            align-items: center; /* Vertikal tengah */
-            text-align: left;     /* Teks tetap rata kiri */
+            align-items: center;
+            /* Vertikal tengah */
+            text-align: left;
+            /* Teks tetap rata kiri */
             padding-top: 3.5rem;
         }
 
