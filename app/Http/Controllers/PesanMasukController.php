@@ -13,7 +13,7 @@ class PesanMasukController extends Controller
     public function index()
     {
         $pages = "Pesan Masuk";
-        $pesans = Pesan::all();
+        $pesans = Pesan::orderBy('created_at', 'desc')->get();
         return view('dashboard.pages.pesan')->with(compact('pages', 'pesans'));
     }
 

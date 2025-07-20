@@ -36,7 +36,7 @@
                             <th>Role</th>
                             <th>Group</th>
                             <th>Kategori</th>
-                            <th>Action</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>

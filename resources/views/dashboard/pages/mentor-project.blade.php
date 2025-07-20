@@ -28,16 +28,10 @@
         <div class="card">
             <div class="card-body">
                 <div class="row p-2 mb-2">
-                    <ul class="nav nav-pills">
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="/dashboard/mentor">Akun Mentor</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="/dashboard/mentor/asesment"
-                                style="background-color: #0d6efd; color: white; box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);">Kategori
-                                Mentor</a>
-                        </li>
-                    </ul>
+                    <div class="d-flex gap-3 mb-3">
+                        <a href="/dashboard/mentor" class="text-decoration-none text-secondary">List Mentor</a>
+                        <a href="/dashboard/mentor/asesment" class="text-decoration-none font-weight-bold" style="color: #8A3DFF; border-bottom: 2px solid #8A3DFF;">Akun Mentor</a>
+                    </div>
                 </div>
                 <table class="table table-striped w-100" id="myTable">
                     <thead>
@@ -46,7 +40,7 @@
                             <th>Email</th>
                             <th>Mentor</th>
                             <th>Kategori</th>
-                            <th>Action</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -57,22 +51,24 @@
                                 <td>{{ $group['user']->email ?? '-' }}</td>
                                 <td>
                                     @foreach ($group['mentors'] as $mentor)
-                                        {{ $mentor->username }},
+                                        {{ $mentor->username }}
+                                        @if (!$loop->last)
+                                            ,
+                                        @endif
                                     @endforeach
                                 </td>
+                                
                                 <td>{{ $group['kategori']->nama ?? '-' }}</td>
                                 <td>
-                                    <button class="btn btn-warning" data-bs-toggle="modal" style="background: #4CAF50"
-                                        data-bs-target="#editAsesmenModal{{ $group['id'] }}">Edit</button>
+                                    <button class="btn btn-warning p-2 me-2" data-bs-toggle="modal" style="background: rgba(76, 175, 80, 0.2)" data-bs-target="#editAsesmenModal{{ $group['id'] }}"><img src="{{ asset('img/icons/edit-icon.svg') }}" alt="Edit" width="32" height="32"></button>
 
-                                    <button class="btn btn-secondary" data-bs-toggle="modal" style="background: #336D95"
-                                        data-bs-target="#resetPasswordModal{{ $group['id'] }}">Reset Password</button>
+                                    <button class="btn btn-secondary p-2 me-2" data-bs-toggle="modal" style="background: rgba(51, 109, 149, 0.2)" data-bs-target="#resetPasswordModal{{ $group['id'] }}"><img src="{{ asset('img/icons/edit-pass-icon.svg') }}" alt="Edit" width="32" height="32"></button>
 
-                                    <form action="{{ route('asesment.destroy', $group['id']) }}" method="POST"
-                                        class="d-inline">
+
+                                    <form action="{{ route('asesment.destroy', $group['id']) }}" method="POST" class="d-inline">
                                         @csrf @method('DELETE')
-                                        <button class="btn btn-danger" style="background: #E0594C"
-                                            onclick="return confirm('Yakin ingin menghapus asesmen ini?')">Hapus</button>
+                                        <button class="btn btn-danger p-2" style="background: rgba(224, 89, 76, 0.1)" onclick="return confirm(`Yakin ingin menghapus akun mentor {{ $group['user']->email }} ?`)"><img src="{{ asset('img/icons/delete.svg') }}" alt="Edit" width="32" height="32"></button>
+                                        
                                     </form>
                                 </td>
                             </tr>
@@ -99,8 +95,8 @@
                                 <select name="mentorId[]" class="mentor-select" multiple required>
                                     @foreach ($mentors as $mentor)
                                         <option value="{{ $mentor->id }}"
-                                            {{ in_array($mentor->id, $group['mentors']->pluck('id')->toArray()) ? 'selected' : '' }}>
-                                            {{ $mentor->username }} ({{ $mentor->email }})
+                                            {{ $item->Mentor && $item->Mentor->id == $mentor->id ? 'selected' : '' }}>
+                                            {{ $mentor->username }} {{ $mentor->email }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -118,8 +114,8 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Batal</button>
-                            <button class="btn btn-warning" style="background: #8A3DFF">Update</button>
+                            <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal" style="background: rgba(92, 92, 92, 0.2); color:rgb(92, 92, 92)">Batal</button>
+                            <button class="btn btn-warning" style="background: #8A3DFF">Simpan</button>
                         </div>
                     </form>
                 </div>
@@ -132,17 +128,19 @@
                         @csrf
                         @method('PUT')
                         <div class="modal-header">
-                            <h5 class="modal-title">Reset Password</h5>
+                            <h5 class="modal-title">Ganti Kata Sandi</h5>
+                            
                         </div>
                         <div class="modal-body">
+                            <p>Email : {{ $item->user->email }}</p>
                             <div class="mb-3">
-                                <label>Password Baru</label>
+                                <label>Kata Sandi Baru</label>
                                 <input type="password" name="password" class="form-control" required minlength="6">
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Batal</button>
-                            <button type="submit" class="btn btn-danger">Reset</button>
+                            <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal" style="background: rgba(92, 92, 92, 0.2); color:rgb(92, 92, 92)">Batal</button>                           
+                            <button type="submit" class="btn btn-primary" style="background: #8A3DFF">Ganti</button>
                         </div>
                     </form>
                 </div>
@@ -164,7 +162,7 @@
                             <select name="mentorId[]" id="mentorSelect" multiple>
                                 @foreach ($mentors as $mentor)
                                     <option value="{{ $mentor->id }}">
-                                        {{ $mentor->username }} ({{ $mentor->email }})
+                                        {{ $mentor->username }} {{ $mentor->email }}
                                     </option>
                                 @endforeach
                             </select>

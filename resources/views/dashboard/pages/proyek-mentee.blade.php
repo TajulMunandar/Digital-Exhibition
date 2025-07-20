@@ -31,7 +31,7 @@
                             <th>Kategori</th>
                             <th>Sesi Kelas</th>
                             <th>Batch</th>
-                            <th>Action</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>

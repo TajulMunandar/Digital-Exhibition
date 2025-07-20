@@ -31,10 +31,10 @@
                         <tr>
                             <th>No</th>
                             <th>Email</th>
-                            <th>Username</th>
+                            <th>Nama Group</th>
                             <th>Kategori</th>
                             <th>Batch</th>
-                            <th>Action</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -84,7 +84,7 @@
                         </div>
                         <div class="modal-body">
                             <div class="mb-3">
-                                <label>Username</label>
+                                <label>Nama Group</label>
                                 <input type="text" name="username" value="{{ $mentee->username }}" class="form-control"
                                     required>
                             </div>
@@ -113,11 +113,12 @@
                         @csrf
                         @method('PUT')
                         <div class="modal-header">
-                            <h5 class="modal-title">Ganti Sandi</h5>
+                            <h5 class="modal-title">Ganti Kata Sandi</h5>
                         </div>
                         <div class="modal-body">
+                            <p>Email : {{ $mentee->user->email }}</p>
                             <div class="mb-3">
-                                <label>Sandi Baru</label>
+                                <label>Kata Sandi Baru</label>
                                 <input type="password" name="password" class="form-control" required minlength="6">
                             </div>
                         </div>
@@ -149,7 +150,7 @@
                             <input type="password" name="password" class="form-control" required>
                         </div>
                         <div class="mb-3">
-                            <label>Username</label>
+                            <label>Nama Group</label>
                             <input type="text" name="username" class="form-control" required>
                         </div>
                         <div class="mb-3">

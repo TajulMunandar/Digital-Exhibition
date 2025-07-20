@@ -28,21 +28,17 @@
         <div class="card">
             <div class="card-body">
                 <div class="row p-2 mb-2">
-                    <ul class="nav nav-pills">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="/dashboard/mentor">Akun Mentor</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/dashboard/mentor/asesment">Kategori Mentor</a>
-                        </li>
-                    </ul>
+                    <div class="d-flex gap-3 mb-3">
+                        <a href="/dashboard/mentor" class="text-decoration-none font-weight-bold" style="color: #8A3DFF; border-bottom: 2px solid #8A3DFF;">List Mentor</a>
+                        <a href="/dashboard/mentor/asesment" class="text-decoration-none text-secondary">Akun Mentor</a>
+                    </div>
                 </div>
                 <table class="table table-striped w-100" id="myTable">
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Username</th>
-                            <th>Action</th>
+                            <th>Nama Mentor</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -51,14 +47,12 @@
                                 <td>{{ $index + 1 }}</td>
                                 <td>{{ $mentor->username }}</td>
                                 <td>
-                                    <button class="btn btn-primary" style="background: #4CAF50" data-bs-toggle="modal"
-                                        data-bs-target="#editMentorModal{{ $mentor->id }}">Edit</button>
+                                    <button class="btn btn-warning p-2 me-2" data-bs-toggle="modal" style="background: rgba(76, 175, 80, 0.2)" data-bs-target="#editMentorModal{{ $mentor->id }}"><img src="{{ asset('img/icons/edit-icon.svg') }}" alt="Edit" width="32" height="32"></button>
 
                                     <form action="{{ route('mentor.destroy', $mentor->id) }}" method="POST"
                                         class="d-inline">
                                         @csrf @method('DELETE')
-                                        <button class="btn btn-danger" style="background: #E0594C"
-                                            onclick="return confirm('Yakin hapus mentor ini?')">Delete</button>
+                                        <button class="btn btn-danger p-2" onclick="return confirm('Yakin hapus mentor {{ $mentor->username }} ?')" style="background: rgba(224, 89, 76, 0.1)"><img src="{{ asset('img/icons/delete.svg') }}" alt="Delete" width="32" height="32"></button>
                                     </form>
                                 </td>
                             </tr>

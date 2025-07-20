@@ -40,30 +40,40 @@
                                 <td>{{ $project->nama_group }}</td>
 
                                 {{-- Mentor dari kategori->mentorProject --}}
-                                <td>
+                                <td class="p-3">
+                                    @php
+                                        $mentorUsernames = [];
+                                    @endphp
                                     @foreach ($project->MentorGroup as $group)
                                         @php
                                             $mentorUsername = optional($group->MentorProject->Mentor)->username;
                                         @endphp
 
                                         @if ($mentorUsername)
-                                            <span class="badge bg-primary me-1">{{ $mentorUsername }}</span>
+                                            @php
+                                                $mentorUsernames[] = $mentorUsername;
+                                            @endphp
                                         @endif
                                     @endforeach
+
+                                    @if (count($mentorUsernames) > 0)
+                                        {{ implode(', ', $mentorUsernames) }}
+                                    @endif
                                 </td>
+
                                 <td>{{ $project->sesi_kelas }}</td>
                                 <td>{{ $project->Kategori->batch ?? '-' }}</td>
-                                <td>{{ $project->created_at->format('d M Y') }}</td>
+                                <td>{{ $project->created_at->format('d M Y H:i') }}</td>
                                 <td>
                                     @php $latestStatus = $project->Status->last(); @endphp
                                     @if ($latestStatus)
                                         @if ($latestStatus->status == 'Disetujui')
-                                            <span class="badge" style="background: purple">Disetujui</span>
+                                            <span class="badge badge-setujui-outline">Disetujui</span>
                                         @else
-                                            <span class="badge" style="background: red">Revisi</span>
+                                            <span class="badge badge-revisi-outline">Revisi</span>
                                         @endif
                                     @else
-                                        <span class="badge bg-secondary">Diproses</span>
+                                        <span class="badge bg-secondary">Diupload</span>
                                     @endif
                                 </td>
                             </tr>
@@ -96,3 +106,28 @@
         });
     </script>
 @endsection
+
+@section('css')
+    @section('css')
+        <style>
+
+        .badge-revisi-outline {
+            border: 1px solid #E0594C;
+            color: #E0594C;
+            background-color: rgba(224, 89, 76, 0.1);
+            font-weight: 600;
+            font-size: 0.675rem;
+            text-transform: capitalize;
+        }
+
+        .badge-setujui-outline {
+            border: 1px solid #4CAF50;
+            color: #4CAF50;
+            background-color: rgba(76, 175, 80, 0.1);
+            font-weight: 600;
+            font-size: 0.675rem;
+            text-transform: capitalize;
+        }
+            
+        </style>
+    @endsection

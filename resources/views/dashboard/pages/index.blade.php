@@ -30,13 +30,14 @@
                             <div class="row">
                                 <div class="col-8 text-start">
                                     <div class="icon icon-shape bg-white shadow text-center border-radius-2xl">
-                                        <i class="fa-solid fa-users text-dark text-gradient text-lg opacity-10"
+                                        <i class="fa-solid fa-folder text-dark text-gradient text-lg opacity-10"
                                             aria-hidden="true"></i>
+                                            <!-- <i class="fa-solid fa-folder"></i> -->
                                     </div>
                                     <h5 class="text-white font-weight-bolder mb-0 mt-3">
                                         {{ $project }}
                                     </h5>
-                                    <span class="text-white text-sm">Total Proyek</span>
+                                    <span class="text-white text-sm">Total Proyek Semua Batch</span>
                                 </div>
                             </div>
                         </div>
@@ -49,7 +50,7 @@
                             <div class="row">
                                 <div class="col-8 text-start">
                                     <div class="icon icon-shape bg-white shadow text-center border-radius-2xl">
-                                        <i class="fa-solid fa-users text-dark text-gradient text-lg opacity-10"
+                                        <i class="fa-solid fa-award text-dark text-gradient text-2xl opacity-10"
                                             aria-hidden="true"></i>
                                     </div>
                                     <h5 class="text-white font-weight-bolder mb-0 mt-3">

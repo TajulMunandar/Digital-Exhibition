@@ -31,7 +31,7 @@
                             <th>Sesi Kelas</th>
                             <th>Batch</th>
                             <th>Tanggal</th>
-                            <th>Action</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -45,24 +45,30 @@
                                     @php
                                         $mentors = $project->Kategori->MentorProject ?? [];
                                     @endphp
-                                    @foreach ($mentors as $mentor)
-                                        <span class="badge bg-primary me-1">{{ $mentor->Mentor->username }}</span>
+                                    @foreach ($mentors as $key => $mentor)
+                                        <span class="badge bg-primary me-1">
+                                            {{ $mentor->Mentor->username }}
+                                        </span>
+                                        @if (!$loop->last)
+                                            ,
+                                        @endif
                                     @endforeach
                                 </td>
+
 
                                 <td>{{ $project->Kategori->nama ?? '-' }}</td>
                                 <td>{{ $project->sesi_kelas }}</td>
                                 <td>{{ $project->Kategori->batch ?? '-' }}</td>
-                                <td>{{ $project->created_at->format('d M Y') }}</td>
+                                <td>{{ $project->created_at->format('d M Y H:i') }}</td>
                                 <td>
                                     <a class="btn btn-primary" href="{{ route('detail-project', $project->id) }}" style="background: #8A3DFF">
                                         Tinjau
                                     </a>
-                                    {{-- <button class="btn btn-primary" style="background: #8A3DFF" data-bs-toggle="modal" data-bs-target="#detailModal{{ $project->id }}">Detail</button> --}}
+                                    <!-- {{-- <button class="btn btn-primary" style="background: #8A3DFF" data-bs-toggle="modal" data-bs-target="#detailModal{{ $project->id }}">Detail</button> --}}
                                     {{-- <button class="btn btn-info btn-sm" data-bs-toggle="modal"
                                         data-bs-target="#detailModal{{ $project->id }}">
                                         Tinjau
-                                    </button> --}}
+                                    </button> --}} -->
                                 </td>
                             </tr>
                         @endforeach

@@ -293,44 +293,54 @@
                 shouldSort: false,
                 placeholder: false,
             });
+            
+            // Inisialisasi Choices.js untuk techSelect
+            const techSelect = document.getElementById('techSelect');
+            new Choices(techSelect, {
+                removeItemButton: false,
+                shouldSort: false,
+                placeholder: false,
+            });
         });
     </script>
 @endsection
 @section('css')
-    <style>
-        /* Custom style for dashed upload area */
-        .file-drop-zone {
-            border: 2px dashed #6c757d;
-            border-radius: 6px;
-            background: #f8f9fa;
-            min-height: 110px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 0.2rem;
-            color: #6c757d;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .file-drop-zone:hover {
-            background-color: #e9ecef;
-        }
-
-        .file-drop-zone svg {
-            width: 30px;
-            height: 30px;
-            color: #6c757d;
-        }
-
-        .btn-disabled {
-            pointer-events: none;
-            opacity: 0.65;
-        }
-
-        small.text-muted {
-            user-select: none;
-        }
-    </style>
-@endsection
+    @section('css')
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
+        <style>
+            /* Custom style for dashed upload area */
+            .file-drop-zone {
+                border: 2px dashed #6c757d;
+                border-radius: 6px;
+                background: #f8f9fa;
+                min-height: 110px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 0.2rem;
+                color: #6c757d;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+            }
+    
+            .file-drop-zone:hover {
+                background-color: #e9ecef;
+            }
+    
+            .file-drop-zone svg {
+                width: 30px;
+                height: 30px;
+                color: #6c757d;
+            }
+    
+            .btn-disabled {
+                pointer-events: none;
+                opacity: 0.65;
+            }
+    
+            small.text-muted {
+                user-select: none;
+            }
+        </style>
+    @endsection

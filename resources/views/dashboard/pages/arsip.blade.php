@@ -39,16 +39,20 @@
                                 <td>{{ $project->nama_group }}</td>
 
                                 {{-- Mentor dari kategori->mentorProject --}}
-                                <td>
-                                    @php
-                                        $mentors = $project->Kategori->MentorProject ?? [];
-                                    @endphp
-                                    @foreach ($mentors as $mentor)
-                                        <span class="badge bg-primary me-1">{{ $mentor->Mentor->username }}</span>
+                                <td class="p-3">
+                                    @foreach ($project->MentorGroup as $key => $group)
+                                        @php
+                                            $mentorUsername = optional($group->MentorProject->Mentor)->username;
+                                        @endphp
+
+                                        @if ($mentorUsername)
+                                            <span class="me-1">{{ $mentorUsername }}@if(!$loop->last), @endif</span>
+                                        @endif
                                     @endforeach
                                 </td>
+
                                 <td>Batch {{ $project->Kategori->batch ?? '-' }}</td>
-                                <td>{{ $project->created_at->format('d M Y') }}</td>
+                                <td>{{ $project->created_at->format('d M Y H:i') }}</td>
                                 <td>
                                     <button class="btn btn-primary" style="background: #8A3DFF" data-bs-toggle="modal"
                                         data-bs-target="#detailModal{{ $project->id }}">Detail</button>

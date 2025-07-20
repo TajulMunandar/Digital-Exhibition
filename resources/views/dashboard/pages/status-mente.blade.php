@@ -25,11 +25,10 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Nama Product</th>
                             <th>Komentar</th>
                             <th>Status</th>
                             <th>Tanggal</th>
-                            <th>Action</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -38,57 +37,19 @@
                             @foreach ($project->Status as $status)
                                 <tr>
                                     <td>{{ $no++ }}</td>
-                                    <td>{{ $project->nama_product }}</td>
+                                    <td>{{ \Illuminate\Support\Str::words($status->comment, 7, ' ...') }}</td>
                                     <td>
                                         @if ($status->status == 'Disetujui')
-                                            <div class="text-success fw-bold mb-1">✅ Selamat! Proyek Anda telah disetujui
-                                                dan ditampilkan di exhibition</div>
+                                            <span class="badge badge-setujui-outline">Disetujui</span>
                                         @elseif ($status->status == 'Revisi')
-                                            <div class="text-danger fw-bold mb-1">⚠️ Perlu revisi. Cek komentar mentor.
-                                            </div>
-                                        @else
-                                            <div class="text-muted mb-1">Status: {{ $status->status }}</div>
-                                        @endif
-                                    </td>
-                                    <td>
-                                        @if ($status->status == 'Disetujui')
-                                            <span class="badge bg-purple" style="background: #845ef7;">✅ Disetujui</span>
-                                        @elseif ($status->status == 'Revisi')
-                                            <span class="badge bg-danger">⚠️ Revisi</span>
-                                        @else
-                                            <span class="badge bg-secondary">⏳ Diupload</span>
+                                            <span class="badge badge-revisi-outline">Revisi</span>
                                         @endif
                                     </td>
                                     <td>
                                         <div class="small text-muted">{{ $status->created_at->format('d M Y H:i') }}</div>
                                     </td>
-                                    <td>
-                                        <button class="btn btn-sm btn-info" data-bs-toggle="modal"
-                                            data-bs-target="#komentarModal{{ $status->id }}">
-                                            Detail
-                                        </button>
-
-                                        <!-- Modal komentar -->
-                                        <div class="modal fade" id="komentarModal{{ $status->id }}" tabindex="-1"
-                                            aria-labelledby="komentarModalLabel{{ $status->id }}" aria-hidden="true">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="komentarModalLabel{{ $status->id }}">
-                                                            Komentar Mentor</h5>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                            aria-label="Tutup"></button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        {{ $status->comment }}
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary"
-                                                            data-bs-dismiss="modal">Tutup</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                    <td class="text-center">
+                                        <span class="btn btn-primary py-2" style="background: #8A3DFF" data-bs-toggle="modal" data-bs-target="#komentarModal{{ $status->id }}">Detail</span>
                                     </td>
                                 </tr>
                             @endforeach
@@ -99,6 +60,41 @@
             </div>
         </div>
     </div>
+    @foreach ($project->Status as $status)
+        <div class="modal fade" id="komentarModal{{ $status->id }}" tabindex="-1"
+            aria-labelledby="komentarModalLabel{{ $status->id }}" aria-hidden="true">
+            <div class="modal-dialog modal-xl modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title fw-bold" id="komentarModalLabel{{ $status->id }}">Informasi Detail</h5>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="mb-3">
+                            <h6 class="text-muted">Status</h6>
+                            <h6 class="fw-bold">
+                                @if ($status->status == 'Disetujui')
+                                    <span class="badge badge-setujui-outline">Disetujui</span>
+                                @elseif ($status->status == 'Revisi')
+                                    <span class="badge badge-revisi-outline">Revisi</span>
+                                @endif
+                            </h6>
+                        </div>
+
+                        <div class="mb-3">
+                            <h6 class="text-muted">Tanggal</h6>
+                            <h6 class="fw-bold">{{ $status->created_at->format('d M Y H:i') }}</h6>
+                        </div>
+
+                        <div class="mb-3">
+                            <h6 class="text-muted">Catatan Revisi</h6>
+                            <h6 class="fw-bold">{{ $status->comment }}</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
 @endsection
 @section('script')
     <script>
@@ -122,3 +118,28 @@
         });
     </script>
 @endsection
+
+@section('css')
+    @section('css')
+        <style>
+
+        .badge-revisi-outline {
+            border: 1px solid #E0594C;
+            color: #E0594C;
+            background-color: rgba(224, 89, 76, 0.1);
+            font-weight: 600;
+            font-size: 0.675rem;
+            text-transform: capitalize;
+        }
+
+        .badge-setujui-outline {
+            border: 1px solid #4CAF50;
+            color: #4CAF50;
+            background-color: rgba(76, 175, 80, 0.1);
+            font-weight: 600;
+            font-size: 0.675rem;
+            text-transform: capitalize;
+        }
+            
+        </style>
+    @endsection

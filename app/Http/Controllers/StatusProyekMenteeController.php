@@ -13,7 +13,9 @@ class StatusProyekMenteeController extends Controller
         $pages = "Status Proyek";
         $user = Auth::user()->id;
         $projects = Project::where('userId', $user)
-            ->with(['Status'])
+            ->with(['Status' => function($query) {
+                $query->orderBy('created_at', 'desc');
+            }])
             ->get();
         return view('dashboard.pages.status-mente')->with(compact('pages', 'projects'));
     }

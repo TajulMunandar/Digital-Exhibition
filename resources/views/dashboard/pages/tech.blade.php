@@ -32,7 +32,7 @@
                             <th>No</th>
                             <th>Nama</th>
                             <th>Icon</th>
-                            <th>Action</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -46,7 +46,7 @@
                                     <button class="btn btn-warning p-2 me-2" data-bs-toggle="modal" style="background: rgba(76, 175, 80, 0.2)" data-bs-target="#edittechModal{{ $tech->id }}"><img src="{{ asset('img/icons/edit-icon.svg') }}" alt="Edit" width="32" height="32"></button>
                                     <form action="{{ route('tech.destroy', $tech->id) }}" method="POST" class="d-inline">
                                         @csrf @method('DELETE')
-                                        <button class="btn btn-danger p-2" onclick="return confirm('Yakin hapus tech ini?')" style="background: rgba(224, 89, 76, 0.1)"><img src="{{ asset('img/icons/delete.svg') }}" alt="Delete" width="32" height="32"></button>
+                                        <button class="btn btn-danger p-2" onclick="return confirm('Yakin hapus tech {{ $tech->nama }} ?')" style="background: rgba(224, 89, 76, 0.1)"><img src="{{ asset('img/icons/delete.svg') }}" alt="Delete" width="32" height="32"></button>
                                     </form>
                                 </td>
                             </tr>

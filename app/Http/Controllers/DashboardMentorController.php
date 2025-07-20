@@ -8,26 +8,36 @@ use Illuminate\Http\Request;
 
 class DashboardMentorController extends Controller
 {
+    // public function index()
+    // {
+    //     $pages = "Dashboard Mentor";
+    //     $projects = Project::with('kategori')->get(); // relasi ke tabel kategori_projects
+    //     return view('dashboard.pages.index-mentor', compact('projects', 'pages'));
+    // }
+
     public function index()
     {
         $pages = "Dashboard Mentor";
-        $projects = Project::with('kategori')->get(); // relasi ke tabel kategori_projects
+        // Modifikasi query untuk hanya menampilkan proyek yang belum ditinjau
+        $projects = Project::with('kategori')
+            ->whereDoesntHave('Status')
+            ->get(); // hanya menampilkan proyek yang belum memiliki status
         return view('dashboard.pages.index-mentor', compact('projects', 'pages'));
-    }
-
-    public function show($projectId)
-    {
-        $project = Project::with('Member.MemberMaster')->findOrFail($projectId)->first();
-        $pages = "Detail Project";
-        return view('dashboard.pages.approvment', compact('project', 'pages'));
     }
 
     // public function show($projectId)
     // {
-    //     $project = Project::find($projectId);
+    //     $project = Project::with('Member.MemberMaster')->findOrFail($projectId)->first();
     //     $pages = "Detail Project";
     //     return view('dashboard.pages.approvment', compact('project', 'pages'));
     // }
+
+    public function show($projectId)
+    {
+        $project = Project::find($projectId);
+        $pages = "Detail Project";
+        return view('dashboard.pages.approvment', compact('project', 'pages'));
+    }
 
     public function setujui(Project $project)
     {
@@ -39,6 +49,7 @@ class DashboardMentorController extends Controller
         ]);
 
         return back()->with('success', 'Project disetujui.');
+        return redirect()->route('status-proyek.index')->with('success', 'Project disetujui dan dipindahkan ke halaman status.');
     }
 
     public function revisi(Request $request, Project $project)

@@ -29,7 +29,7 @@
                             <th>Isi Pesan</th>
                             <th>Tipe Pesan</th>
                             <th>Dikirim Pada</th>
-                            <th>Action</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -106,6 +106,8 @@
         </div>
     @endforeach
 @endsection
+
+
 
 @section('script')
     <script>

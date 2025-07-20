@@ -13,8 +13,8 @@ class StatusProyekController extends Controller
     public function index()
     {
         $pages = "Status Project";
-        $projects = Project::with('kategori')->get(); // relasi ke tabel kategori_projects
-        return view('dashboard.pages.status-proyek', compact('projects', 'pages'));
+        $projects = Project::orderBy('created_at', 'desc')->get();
+        return view('dashboard.pages.status-proyek')->with(compact('projects', 'pages'));
     }
 
     /**
